@@ -1,0 +1,42 @@
+@import url('global.css');
+
+.btn-iniciar-sesion{
+    background-color: #F5A711; /* Color amarillo */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    color: #ffffff; /* Texto negro */
+    cursor: pointer;
+    font-size: small;
+    width: 20%;
+    line-height: 40px;
+    transition: background-color 0.3s; /* Animación de cambio de color al pasar el cursor */
+  }
+
+.btn-iniciar-sesion:hover {
+    background-color: #ff9901; /* Color amarillo más oscuro al pasar el cursor */
+}
+
+.container{
+    max-width: max-content;
+}
+
+.box {
+    width: 479px;
+    height: 64px;
+}
+  
+.box .vector {
+    position: relative;
+    width: 20%;
+    height: 64px;
+    top: 0;
+    left: 0;
+}
+
+.icono {
+    margin-left: 10px; /* Espacio entre el ícono y el texto */
+    margin-right:10px ;
+    width: 24px; /* Ancho del ícono */
+    height: 24px; /* Altura del ícono */
+}
+
