@@ -40,3 +40,38 @@
     height: 24px; /* Altura del ícono */
 }
 
+.txt{
+    font-size: xx-large;
+    color: #ffffff;
+
+}
+
+.color{
+    color: #F5A711;
+}
+
+.responsive-banner {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white; /* Set text color to white for better contrast */
+    text-align: justify; /* Center text horizontally */
+    display: flex;
+    width: 618px; 
+    height: 290px;
+  }
+  
+/* Estilos CSS para el icono de búsqueda */
+.fa-search {
+    font-size: 20px;
+}
+
+/* Estilos CSS para el campo de búsqueda */
+.form-control {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+/* Estilos CSS para el botón */
+.btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}

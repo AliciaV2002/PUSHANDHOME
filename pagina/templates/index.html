@@ -20,7 +20,8 @@
 </head>
 <body>
     <!-- Navbar -->
-    <div>
+    <header>
+        <!-- SVG de fondo -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 834" fill="none" class="imagecontainer" style="position: absolute; top: -2%;z-index:-1;">
             <image href="{% static 'imagenes/Estudiantes.png' %}" width="1920" height="834"/>
             <g filter="url(#filter0_d_112_71)">
@@ -48,37 +49,91 @@
             </defs>
             <rect x="0" y="0" width="100%" height="100%" fill="url(#degradado-linear)"/>
         </svg>
-        <header>
-            <!-- SVG de fondo -->
-            <div>
-                <nav class="navbar navbar-expand-lg">
-                    <div class="container-fluid nav-item d-nonw">  <a href="/">
-                        <img class="vector box" src="{% static 'imagenes/Vector.svg' %}" style="margin-top:4%; padding:1.5%; margin-left:15%;">
-                    </a>
+        <div>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid nav-item d-nonw">  <a href="/">
+                    <img class="vector box" src="{% static 'imagenes/Vector.svg' %}" style="margin-top:4%; padding:1.5%; margin-left:15%;">
+                </a>
+                </div>
+            <div class="container-fluid nav-item" style="justify-content: flex-end; margin-right:2% ">
+                <button class="btn-iniciar-sesion poppins-semibold nav-item" style="text-align:center; margin-right: 5%"> 
+                        Registrarse
+                        <span>
+                            <i class="fas fa-user" style="margin-left:5%"></i>
+                        </span>
+                    </button>
+                    <button class="btn-iniciar-sesion poppins-semibold nav-item" style="text-align:center;"> 
+                        Iniciar sesión
+                        <span>
+                            <i class="fas fa-user" style="margin-left:5%"></i>
+                        </span>
+                    </button>
+                </div>	
+            </nav>
+        </div>
+        <!--buscador con boton-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg" style="margin-top: 2%; margin-left:6%;">
+                    <div class="responsive-banner row" style="padding: 6%; padding-top:8%; margin: 10px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50px;">
+                        <span class= "poppins-regular txt">Vive, <span class="color">estudia</span>, crece. Encuentra tu  <span class="color">hogar</span> ideal lejos de tu <span class="color">hogar.</span></span>
+                        
+                        <div style="position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 5%; top: 50%; transform: translateY(-115%); color: rgba(0, 0, 0, 0.5);"></i>
+                            <input style="width:100%; height:70%; border-radius:10px; background-color: rgba(255, 255, 255, 0.7); border:none; color: #000000; padding-left: 40px;" type="text" class="form-control poppins-regular" placeholder="Buscar por universidad" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary poppins-regular" type="button" id="button-addon2" style="position: absolute; right: 30px;  transform: translateY(-115%); background-color: #F5A711; color: #000000; border-radius:10px; border:none;">¡Comenzar!</button>
+                        </div>
+                        
                     </div>
-                <div class="container-fluid nav-item" style="justify-content: flex-end; margin-right:2% ">
-                    <button class="btn-iniciar-sesion poppins-semibold nav-item" style="text-align:center; margin-right: 5%"> 
-                            Registrarse
-                            <span>
-                                <i class="fas fa-user" style="margin-left:5%"></i>
-                            </span>
-                        </button>
-                        <button class="btn-iniciar-sesion poppins-semibold nav-item" style="text-align:center;"> 
-                            Iniciar sesión
-                            <span>
-                                <i class="fas fa-user" style="margin-left:5%"></i>
-                            </span>
-                        </button>
-                    </div>	
-                </nav>
+                </div>
+                <div class="col-lg" style="display: flex; justify-content: center; align-items: center;">
+                    <a href="/"><img class="imagecontainer" src="{% static 'imagenes/Logo.png' %}" style="width:290px; height: 270px; background-color: rgba(255, 255, 255, 0.47); border-radius: 50%;"></a>
+                </div>
             </div>
-        </header>
-
+        </div>
+    </header>
     <!-- Contenido -->
-    <!--buscador con boton-->
-    
-    
-    <div>
+    <div class="content" style="padding:10%">
+        <div style="border-left: 1px solid black; height: 40px;">
+            <h2 class="poppins-regular" style="margin-left:2%"><span class="color">Nuevos</span> alojamientos</h2>
+            <!--Imagenes-->
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="container-xxl" style="position: relative; width: 100%;">
+        <div class="row" style="text-align: left; padding:2% 10%; ">
+            <h1 class="txt col-8">Descubre nuestras promociones exclusivas y haz de tu estancia algo único.</h1>
+
+            <button class="btn btn-outline-secondary poppins-regular col-4" type="button" id="button-addon2" style="align-items: right; background-color: #FFFFFF; color: #F5A711; border-radius:50px; border:none; padding:1% 5%; width:20%; height:20%; margin-left:5%; text-align:center; font-size:medium">¡Comenzar!</button>
+        </div>
+        <div class="row poppins-regular" style="padding:2% 10%; font-size:small; text-align: left;">
+            <div class="col" style="padding: 0 5%">
+                <p>Detalles de contacto</p>
+                <div style="border-top: 1px solid white;"></div>
+                <br>
+                <p>Teléfono: 300 607 5321</p>
+            </div>
+            <div class="col" style="padding: 0 5%">
+                <p>Menú</p>
+                <div style="border-top: 1px solid white;"></div>
+                <br>
+                <p><a style="color:#ffffff;" href="#">Inicio</a></p>
+                <p><a style="color:#ffffff;" href="#">Nuestros servicios</a></p>
+            </div>
+            <div class="col" style="padding: 0 5%">
+                <p>Políticas de privacidad</p>
+                <div style="border-top: 1px solid white;"></div>
+                <br>
+                <p><a style="color:#ffffff;" href="#">Condiciones de uso</a></p>
+            </div>
+        </div>
+    </footer>
 
 
 </body>

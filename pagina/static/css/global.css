@@ -27,7 +27,7 @@ font-family: "Poppins", sans-serif;
 font-weight: 800;
 font-style: normal;
 }
-body, html {
+html {
     height: 100vh;
     margin: 0;
 }
@@ -35,3 +35,25 @@ body, html {
     display: flex; /* Use flexbox for button alignment */
     justify-content: space-between; /* Distribute buttons evenly */
   }
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Hacemos que el cuerpo ocupe al menos el 100% de la altura de la ventana del navegador */
+    width: auto;
+}
+
+.content {
+    flex: 1; /* El contenido ocupará el espacio restante */
+}
+footer {
+    background-color: #EEA30E;
+    bottom: 0;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    z-index: 0;
+    position: absolute; /* Cambiado a posición fija */
+}
