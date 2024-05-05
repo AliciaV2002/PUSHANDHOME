@@ -75,3 +75,32 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
+
+.container-fluid {
+    height: 100vh; /* Set container to 100% viewport height */
+    width: 100vw; /* Set container to 100% viewport width */
+}
+
+.row {
+    height: 100%; /* Set row to 100% height of its parent container */
+}
+
+.col-4 {
+    display: flex; /* Enable flexbox for vertical alignment */
+    flex-direction: column; /* Arrange flex items vertically */
+}
+
+.col-4 .flex-grow-1 {
+    flex-grow: 1; /* Allow empty space to grow and fill remaining height */
+}
+
+.col-4 .text-center {
+    align-self: center; /* Center text content vertically */
+}
+.h-100 {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center;   /* Center content horizontally */
+  }
