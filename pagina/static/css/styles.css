@@ -104,3 +104,9 @@
     justify-content: center; /* Center content vertically */
     align-items: center;   /* Center content horizontally */
   }
+
+.password-icon {
+    float: right;
+    position: relative;
+    cursor: pointer;
+}

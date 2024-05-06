@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script defer src="{% static 'functions.js' %}"></script>
+    <script src="{% static 'password-toggle.js' %}"></script>
     <title>Push & Home</title>
     <link rel="icon" type = "image" href="{% static 'imagenes/Logo.png' %}" style = "width:100%">
 </head>
@@ -41,17 +41,21 @@
                 <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu correo" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
 
                 <label for="inputPassword5" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
-                <input type="password" id="inputPassword5" class="form-control Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
 
-                <label for="form" class="form-label Poppins" style="color: #787A7C; font-size:small;margin-top: 5%;">Rol</label>
-                <div class="form-floating">
-                    <select class="form-select Poppins" id="floatingSelect" aria-label="Selecciona tu rol" style="background-color: rgba(176, 186, 195, 0.4); font-size:medium; color:#5b5b5b; padding-bottom: -20%;">
-                        <option selected>Selecciona tu rol</option>
-                        <option value="1">Arrendador</option>
-                        <option value="2">Arrendatario (Estudiante)</option>
-                    </select>
+                <div style="align-content: right; text-align: right;">
+                  <input type="password" id="inputPassword5" name="password" class="form-control password1 Poppins" value="clave" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
+                  <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-180%); margin-right: 2%;"></span>
                 </div>
                 
+
+                <label for="form" class="form-label Poppins" style="color: #787A7C; font-size:small;">Rol</label>
+                <div class="input-group mb-3">
+                  <select class="form-select" id="inputGroupSelect02" style=" background-color: rgba(176, 186, 195, 0.4); font-size:small; font-family: 'Poppins'; color: rgba(0, 0, 0, 0.7);">
+                    <option selected>Selecciona tu rol</option>
+                    <option value="1">Arrendador</option>
+                    <option value="2">Arrendatario (Estudiante)</option>
+                  </select>
+                </div>
               </div>
 
               <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 10%; font-weight: 400; margin-top: 0%;">
@@ -60,7 +64,7 @@
                   <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 10%;padding-right: 10%;">Crear cuenta</button>
                 </div>
                 <div class="poppins" style="text-align: left; font-size: small; font-weight: 400; color: #787A7C;">
-                  ¿Ya tienes cuenta? <a href="/iniciarsesion" style="color: #F38E31;">Inicia sesión</a>
+                  ¿Ya tienes cuenta? <a href="/IniciarSesion" style="color: #F38E31;">Inicia sesión</a>
                 </div>
               </div>
             </div>

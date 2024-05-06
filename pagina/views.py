@@ -13,3 +13,6 @@ def login(request):
 
 def changepass(request):
     return render(request, 'cambiarcontraseña.html')
+
+def services(request):
+    return render(request, 'servicios.html')
