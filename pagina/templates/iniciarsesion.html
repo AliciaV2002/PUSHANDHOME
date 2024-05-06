@@ -11,6 +11,7 @@
     <!-- Import css propio -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
+    <script src="{% static 'password-toggle.js' %}"></script>
     <!-- Import fuentes desde google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,11 +39,14 @@
                 <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu nombre de usuario" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
 
                 <label for="inputPassword5" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
-                <input type="password" id="inputPassword5" class="form-control Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
+                <div style="align-content: right; text-align: right;">
+                  <input type="password" id="inputPassword5" name="password" class="form-control password1 Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
+                  <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-180%); margin-right: 2%;"></span>
+                </div>
                 
               </div>
 
-              <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 10%; font-weight: 400;">
+              <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 5%; font-weight: 400;">
                 <a href="/CambiarContraseña" style="color: #F38E31;">¿Olvidaste tu contraseña?</a>
             
                 <div class="col-auto" style="align-items: center; align-content: center; margin-top: 10%;">
