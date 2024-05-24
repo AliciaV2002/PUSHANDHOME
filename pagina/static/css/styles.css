@@ -121,4 +121,11 @@
     body {
         margin-top: 100%;
     }
+
 }
+.sidebar {
+    background-color: #ff000000; /* naranja */
+    padding: 20px;
+    width: 200px;
+    float: left;
+  }
