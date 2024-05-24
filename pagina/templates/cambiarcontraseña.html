@@ -10,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Import css propio -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styleguide.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
+    <script src="{% static 'password-toggle.js' %}"></script>
     <!-- Import fuentes desde google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,4 +22,47 @@
     <title>Push & Home</title>
     <link rel="icon" type = "image" href="{% static 'imagenes/Logo.png' %}" style = "width:100%">
 </head>
+
+<body style="background-color: rgba(253, 230, 204, 0.75);">
+    <div class="container-fluid">
+        <div class="row h-100">
+          <div class="col-5 d-flex flex-column">
+            <div class="flex-grow-1"></div> <a class="text-center hide-on-small-screens" href="/">
+              <img src="{% static 'imagenes/Component 1.png' %}"  class="image-fluig"  style="width: 80%;">
+            </a>
+        </div>
+        <div class="col-7" style="height: calc(100vh);">
+            <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%;  padding-right: 10%; ">
+                <h6 class="poppins-semibold" style="text-align: center; padding-top: 10%; padding-bottom: 10%;">RECUPERA TU CUENTA</h6>
+                <div style="align-items: center; align-content: center">
+                    <label for="exampleFormControlInput1" class="form-label poppins-regular" style="color: #787A7C; font-size:small">Nombre de usuario</label>
+                
+                    <input type="email" class="form-control Poppins" id="exampleFormControlInput1" placeholder="Ingresa tu correo electrónico" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
+
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-primary poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small;padding: 0.5rem 2rem; text-align: center; margin-top: 5%; align-items: center; align-content: center;">Enviar código</button>
+                    </div>
+                
+                    
+                </div>
+                
+
+                <label for="inputPassword5" class="form-label poppins-semibold" style="color: #787A7C; font-size:small; margin-top: 5%;">A continuación ingrese el código que llego a su correo</label>
+                <div style="align-content: right; text-align: right;">
+                    <input 
+                        type="number" 
+                        class="form-control Poppins" 
+                        placeholder="Código de seis (6) digitos" 
+                        style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller"
+                        oninput="this.value = this.value.slice(0, 6);"
+                    >
+                    <div class="col-auto" style="align-items: center; align-content: center;text-align: center; margin-top: 5%;">
+                        <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 5%;padding-right: 5%; ">Restablecer contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
 </html>

@@ -16,3 +16,9 @@ def changepass(request):
 
 def services(request):
     return render(request, 'servicios.html')
+
+def condicionesuso(request):
+    return render(request, 'condiciones_servicio.html')
+
+def alojaminetos(request):
+    return render(request, 'ver_alojamientos.html')

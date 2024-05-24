@@ -17,7 +17,7 @@
 }
 
 .container{
-    max-width: max-content;
+    max-width: calc(100%);
 }
 
 .box {
@@ -93,4 +93,32 @@
     float: right;
     position: relative;
     cursor: pointer;
+}
+
+@media screen and (max-width: 720px) {
+    .hide-on-small-screens {
+      display: none;
+    }
+    body {
+        margin-top: 100%;
+    }
+    
+  }
+
+@media (max-width: 720px) {
+    .element-to-hide {
+        display: none;
+    }
+    body {
+        margin-top:100%;
+    }
+}
+
+@media (min-width: 720px) {
+    .hide-on-small-screens {
+        display: block;
+    }
+    body {
+        margin-top: 100%;
+    }
 }

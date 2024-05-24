@@ -55,7 +55,7 @@
         </svg>
         <div>
             <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid nav-item d-nonw">  <a href="/">
+                <div class="container-fluid nav-item d-nonw " style="margin-left:calc(-5%);">  <a href="/">
                     <img class="vector box" src="{% static 'imagenes/Vector.svg' %}" style="margin-top:4%; padding:1.5%; margin-left:15%;">
                 </a>
                 </div>
@@ -76,7 +76,7 @@
             </nav>
         </div>
         <!--buscador con boton-->
-        <div class="container-fluid" style="margin-top: 5%">
+        <div class="container-fluid hide-on-small-screens" style="margin-top: 5%">
             <div class="row">
                 <div class="col-lg" style="margin-top: 2%; margin-left:6%;">
                     <div class="responsive-banner row" style="padding: 6%; padding-top:8%; margin: 10px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50px;">
@@ -97,11 +97,11 @@
         </div>
     </header>
     <!-- Contenido -->
-    <div class="content" style="padding:5%;  margin-bottom:50%;">
+    <div class="content" style="padding:0% 5%;  margin-bottom:50%;">
         <div style="border-left: 1px solid black; height: 40px;">
-            <h2 class="poppins-regular" style="margin-left:2%"><span class="color">Nuevos</span> alojamientos</h2>
+            <h2 class="poppins-regular" style="margin-left:2%; margin-top: 110px;"><span class="color">Nuevos</span> alojamientos</h2>
             <!--Imagenes-->
-            <div id="carouselExampleCaptions" class="carousel slide" style="margin-top:2%;">
+            <div id="carouselExampleCaptions" class="carousel slide" style="margin-top:5%;">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                   <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -153,7 +153,7 @@
         <div class="row" style="text-align: left; padding:2% 10%; ">
             <h1 class="txt col-8">Descubre nuestras promociones exclusivas y haz de tu estancia algo único.</h1>
 
-            <a class="btn btn-outline-secondary poppins-regular col-4" type="button" id="button-addon2" style="align-items: right; background-color: #FFFFFF; color: #F5A711; border-radius:50px; border:none; padding:1% 5%; width:20%; height:20%; margin-left:5%; text-align:center; font-size:medium" href="IniciarSesion">¡Comenzar!</a>
+            <a class="btn btn-outline-secondary poppins-regular col-4 hide-on-small-screens" type="button" id="button-addon2" style="align-items: right; background-color: #FFFFFF; color: #F5A711; border-radius:50px; border:none; padding:1% 5%; width:20%; height:20%; margin-left:5%; text-align:center; font-size:medium" href="IniciarSesion">¡Comenzar!</a>
         </div>
         <div class="row poppins-regular" style="padding:2% 10%; font-size:small; text-align: left;">
             <div class="col" style="padding: 0 5%">
@@ -173,7 +173,7 @@
                 <p>Políticas de privacidad</p>
                 <div style="border-top: 1px solid white;"></div>
                 <br>
-                <p><a style="color:#ffffff;" href="#">Condiciones de uso</a></p>
+                <p><a style="color:#ffffff;" href="CondicionesdeUso">Condiciones de uso</a></p>
             </div>
         </div>
     </footer>
