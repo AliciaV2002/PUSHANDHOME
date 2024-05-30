@@ -1,11 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
 
 def register(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        apellido = request.POST.get('apellido')
+        correo = request.POST.get('correo')
+        contrasena = request.POST.get('contrasena')
+        rol = request.POST.get('rol')
+
+        # Verificar si el correo ya está registrado
+        if Usuario.objects.filter(correo=correo).exists():
+            return render(request, 'registrarse.html', {'message_type': 'error', 'message': 'El correo electrónico ya está registrado. Por favor, ingresa uno diferente.'})
+
+        # Crear un nuevo usuario
+        usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=contrasena, rol=rol)
+        usuario.save()
+
+        # Redirigir a otra página después del registro exitoso
+        return redirect(request, 'registrarse.html', {'message_type': 'success', 'message': 'Registro exitoso. ¡Bienvenido a Push & Home!'})
+
+
     return render(request, 'registrarse.html')
 
 def login(request):
@@ -20,5 +40,20 @@ def services(request):
 def condicionesuso(request):
     return render(request, 'condiciones_servicio.html')
 
-def alojaminetos(request):
+def ver_alojamientos(request):
     return render(request, 'ver_alojamientos.html')
+
+def alojamientos_pub(request):
+    return render(request, 'alojamientos_publicados.html')
+
+
+
+
+
+
+from .models import Usuario
+from django.shortcuts import render, redirect
+
+def registrar_usuario(request):
+    
+    return render(request, 'registro.html')

@@ -20,60 +20,89 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="{% static 'password-toggle.js' %}"></script>
     <title>Push & Home</title>
-    <link rel="icon" type = "image" href="{% static 'imagenes/Logo.png' %}" style = "width:100%">
+    <link rel="icon" type="image" href="{% static 'imagenes/Logo.png' %}" style="width:100%">
 </head>
 <body style="background-color: rgba(253, 230, 204, 0.75);">
     <div class="container-fluid">
         <div class="row h-100">
-          <div class="col-5 d-flex flex-column">
-            <div class="flex-grow-1"></div> <a class="text-center hide-on-small-screens" href="/">
-              <img src="{% static 'imagenes/Component 1.png' %}"  class="image-fluig"  style="width: 80%;">
-            </a>
-          </div>
-          <div class="col-7" style="height: calc(100vh);">
-            <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%;  padding-right: 10%;">
-              <h6 class="poppins-semibold" style="text-align: center; padding-top: 5%;">REGISTRATE EN PUSH & HOME</h6>
-              <div style="align-items: center;">
-                <label for="exampleFormControlInput1" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Nombres</label>
-                <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu nombre" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-
-                <label for="exampleFormControlInput1" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Apellido</label>
-                <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu apellido" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-
-                <label for="exampleFormControlInput1" class="form-label Poppins" style="color: #787A7C; font-size:small;margin-top: 5%;">Email</label>
-                <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu correo" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-
-                <label for="inputPassword5" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
-
-                <div style="align-content: right; text-align: right;">
-                  <input type="password" id="inputPassword5" name="password" class="form-control password1 Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-                  <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-150%); margin-right: 2%;"></span>
-                </div>
-                
-
-                <label for="form" class="form-label Poppins" style="color: #787A7C; font-size:small;margin-top: 5%;">Rol</label>
-                <div class="input-group mb-3">
-                  <select class="form-select" id="inputGroupSelect02" style=" background-color: rgba(176, 186, 195, 0.4); font-size:small; font-family: 'Poppins'; color: rgba(0, 0, 0, 0.7);">
-                    <option selected>Selecciona tu rol</option>
-                    <option value="1">Arrendador</option>
-                    <option value="2">Arrendatario (Estudiante)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 10%; font-weight: 400; margin-top: 0%;">
-            
-                <div class="col-auto" style="align-items: center; align-content: center; margin-top: 5%;">
-                  <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 10%;padding-right: 10%;">Crear cuenta</button>
-                </div>
-                <div class="poppins" style="text-align: left; font-size: small; font-weight: 400; color: #787A7C;">
-                  ¿Ya tienes cuenta? <a href="/IniciarSesion" style="color: #F38E31;">Inicia sesión</a>
-                </div>
-              </div>
+            <div class="col-5 d-flex flex-column">
+                <div class="flex-grow-1"></div>
+                <a class="text-center hide-on-small-screens" href="/">
+                    <img src="{% static 'imagenes/Component 1.png' %}" class="image-fluig" style="width: 80%;">
+                </a>
             </div>
-          </div>
+            <div class="col-7" style="height: calc(100vh);">
+                <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%; padding-right: 10%;">
+                    <h6 class="poppins-semibold" style="text-align: center; padding-top: 5%;">REGISTRATE EN PUSH & HOME</h6>
+                    <form action="/Registrarse/" method="post">
+                        {% csrf_token %}
+                        <label for="nombre" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Nombres</label>
+                        <input type="text" class="form-control Poppins" id="nombre" name="nombre" placeholder="Ingresa tu nombre" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+
+                        <label for="apellido" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Apellido</label>
+                        <input type="text" class="form-control Poppins" id="apellido" name="apellido" placeholder="Ingresa tu apellido" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+
+                        <label for="correo" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Email</label>
+                        <input type="email" class="form-control Poppins" id="correo" name="correo" placeholder="Ingresa tu correo" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+
+                        <label for="contrasena" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
+                        <div style="align-content: right; text-align: right;">
+                            <input type="password" id="contrasena" name="contrasena" class="form-control password1 Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+                            <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-150%); margin-right: 2%;"></span>
+                        </div>
+
+                        <label for="rol" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Rol</label>
+                        <select class="form-select" id="rol" name="rol" style="background-color: rgba(176, 186, 195, 0.4); font-size:small; font-family: 'Poppins'; color: rgba(0, 0, 0, 0.7);" required>
+                            <option value="">Selecciona tu rol</option>
+                            <option value="Arrendador">Arrendador</option>
+                            <option value="Arrendatario">Arrendatario (Estudiante)</option>
+                        </select>
+
+                        <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 10%; font-weight: 400; margin-top: 0%;">
+                            <div class="col-auto" style="align-items: center; align-content: center; margin-top: 5%;">
+                                <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 10%; padding-right: 10%;">Crear cuenta</button>
+                            </div>
+                            <div class="poppins" style="text-align: left; font-size: small; font-weight: 400; color: #787A7C;">
+                                ¿Ya tienes cuenta? <a href="/IniciarSesion" style="color: #F38E31;">Inicia sesión</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
+
+    <!-- Modal -->
+   <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalLabel">Aviso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div id="messageModalBody"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showMessage(type, message) {
+        var modalBody = document.getElementById("messageModalBody");
+        modalBody.innerHTML = "";
+
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("form-control");
+        messageElement.style.backgroundColor = "rgba(176, 186, 195, 0.4)";
+        messageElement.style.border = "none";
+        messageElement.innerText = message;
+
+        modalBody.appendChild(messageElement);
+
+        var myModal = new bootstrap.Modal(document.getElementById("messageModal"), {});
+        myModal.show();
+    }
+</script>
 
 </body>
-</html>
