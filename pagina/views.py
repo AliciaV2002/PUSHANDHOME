@@ -16,15 +16,16 @@ def register(request):
 
         # Verificar si el correo ya está registrado
         if Usuario.objects.filter(correo=correo).exists():
-            return render(request, 'registrarse.html', {'message_type': 'error', 'message': 'El correo electrónico ya está registrado. Por favor, ingresa uno diferente.'})
-
+            messages.error(request, 'El correo electrónico ya está registrado. Por favor, ingresa uno diferente.')
+            # return render(request, 'registrarse.html')
+        else:
         # Crear un nuevo usuario
-        usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=contrasena, rol=rol)
-        usuario.save()
+            usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=contrasena, rol=rol)
+            usuario.save()
 
         # Redirigir a otra página después del registro exitoso
-        return redirect(request, 'registrarse.html', {'message_type': 'success', 'message': 'Registro exitoso. ¡Bienvenido a Push & Home!'})
-
+            messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
+            return redirect('/Alojamientos')
 
     return render(request, 'registrarse.html')
 
