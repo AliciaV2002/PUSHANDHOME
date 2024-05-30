@@ -34,28 +34,37 @@
           <div class="col-7" style="height: calc(100vh);">
             <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%;  padding-right: 10%;">
               <h6 class="poppins-semibold" style="text-align: center; padding-top: 10%; padding-bottom: 10%;">INGRESA EN PUSH & HOME</h6>
-              <div style="align-items: center;">
-                <label for="exampleFormControlInput1" class="form-label Poppins" style="color: #787A7C; font-size:small">Nombre de usuario</label>
-                <input type="email" class="form-control Poppins " id="exampleFormControlInput1" placeholder="Ingresa tu nombre de usuario" style=" background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
+              <form method="post" action="">
+                {% csrf_token %}
+                {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+                <div style="align-items: center;">
+                  <label for="correo" class="form-label Poppins" style="color: #787A7C; font-size:small">Correo electrónico</label>
+                  <input type="email" class="form-control Poppins" id="correo" name="correo" placeholder="Ingresa tu correo electrónico" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
 
-                <label for="inputPassword5" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
-                <div style="align-content: right; text-align: right;">
-                  <input type="password" id="inputPassword5" name="password" class="form-control password1 Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-                  <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-150%); margin-right: 2%;"></span>
+                  <label for="contrasena" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Contraseña</label>
+                  <div style="align-content: right; text-align: right;">
+                    <input type="password" id="contrasena" name="contrasena" class="form-control password1 Poppins" placeholder="Ingresa tu contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+                    <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-150%); margin-right: 2%;"></span>
+                  </div>
                 </div>
-                
-              </div>
 
-              <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 5%; font-weight: 400;">
-                <a href="/CambiarContraseña" style="color: #F38E31;">¿Olvidaste tu contraseña?</a>
-            
-                <div class="col-auto" style="align-items: center; align-content: center; margin-top: 10%;">
-                  <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 10%;padding-right: 10%;">Iniciar sesión</button>
+                <div class="Poppins" style="text-align: center; font-size: medium; margin-top: 5%; font-weight: 400;">
+                  <a href="/CambiarContraseña" style="color: #F38E31;">¿Olvidaste tu contraseña?</a>
+
+                  <div class="col-auto" style="align-items: center; align-content: center; margin-top: 10%;">
+                    <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 10%;padding-right: 10%;">Iniciar sesión</button>
+                  </div>
+                  <div class="poppins" style="text-align: left; font-size: small; margin-top: 5%; font-weight: 400; color: #787A7C;">
+                    ¿No tienes cuenta? <a href="/Registrarse" style="color: #F38E31;">Regístrate</a>
+                  </div>
                 </div>
-                <div class="poppins" style="text-align: left; font-size: small; margin-top: 5%; font-weight: 400; color: #787A7C;">
-                  ¿No tienes cuenta? <a href="/Registrarse" style="color: #F38E31;">Regístrate</a>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

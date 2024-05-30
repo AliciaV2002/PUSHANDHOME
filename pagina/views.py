@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate, login as auth_login
+from .models import Usuario
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
-
+#-----------------------------------------------------------
+# REGISTRARSE -----------------------------------------------------------------------
+#-----------------------------------------------------------
 def register(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -16,22 +22,42 @@ def register(request):
 
         # Verificar si el correo ya está registrado
         if Usuario.objects.filter(correo=correo).exists():
-            messages.error(request, 'El correo electrónico ya está registrado. Por favor, ingresa uno diferente.')
-            # return render(request, 'registrarse.html')
-        else:
+            message = 'El correo electrónico ya está registrado.'
+            return render(request, 'registrarse.html', {'message': message})
+        
         # Crear un nuevo usuario
-            usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=contrasena, rol=rol)
-            usuario.save()
+        usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=make_password(contrasena), rol=rol)
+        usuario.save()
 
-        # Redirigir a otra página después del registro exitoso
-            messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
-            return redirect('/Alojamientos')
+    # Redirigir a otra página después del registro exitoso
+        messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
+        return redirect('/Alojamientos')
 
     return render(request, 'registrarse.html')
-
+#-----------------------------------------------------------
+# INICIAR SESIÓN -----------------------------------------------------------------------
+#-----------------------------------------------------------
 def login(request):
-    return render(request, 'iniciarsesion.html')
+    if request.method == 'POST':
+        correo = request.POST.get('correo')
+        contrasena = request.POST.get('contrasena')
 
+        try:
+            usuario = Usuario.objects.get(correo=correo)
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Credenciales inválidas.')
+            return render(request, 'iniciarsesion.html')
+
+        if check_password(contrasena, usuario.contrasena):
+            # Iniciar sesión
+            request.session['usuario_id'] = usuario.id_usuario
+            messages.success(request, 'Inicio de sesión exitoso.')
+            return redirect('/Alojamientos')  # Redirigir a la página de inicio
+        else:
+            messages.error(request, 'Credenciales inválidas.')
+
+    return render(request, 'iniciarsesion.html')
+#-----------------------------------------------------------------------------------------
 def changepass(request):
     return render(request, 'cambiarcontraseña.html')
 
@@ -47,14 +73,3 @@ def ver_alojamientos(request):
 def alojamientos_pub(request):
     return render(request, 'alojamientos_publicados.html')
 
-
-
-
-
-
-from .models import Usuario
-from django.shortcuts import render, redirect
-
-def registrar_usuario(request):
-    
-    return render(request, 'registro.html')

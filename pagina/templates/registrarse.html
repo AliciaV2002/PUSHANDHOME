@@ -34,7 +34,7 @@
             <div class="col-7" style="height: calc(100vh);">
                 <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%; padding-right: 10%;">
                     <h6 class="poppins-semibold" style="text-align: center; padding-top: 5%;">REGISTRATE EN PUSH & HOME</h6>
-                    <form action="/Registrarse/" method="post">
+                    <form action="" method="post">
                         {% csrf_token %}
                         <label for="nombre" class="form-label Poppins" style="color: #787A7C; font-size:small; margin-top: 5%;">Nombres</label>
                         <input type="text" class="form-control Poppins" id="nombre" name="nombre" placeholder="Ingresa tu nombre" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
@@ -72,37 +72,10 @@
         </div>
     </div>
 
-    <!-- Modal -->
-   <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="messageModalLabel">Aviso</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <div id="messageModalBody"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function showMessage(type, message) {
-        var modalBody = document.getElementById("messageModalBody");
-        modalBody.innerHTML = "";
-
-        var messageElement = document.createElement("div");
-        messageElement.classList.add("form-control");
-        messageElement.style.backgroundColor = "rgba(176, 186, 195, 0.4)";
-        messageElement.style.border = "none";
-        messageElement.innerText = message;
-
-        modalBody.appendChild(messageElement);
-
-        var myModal = new bootstrap.Modal(document.getElementById("messageModal"), {});
-        myModal.show();
-    }
-</script>
-
+    <script>
+        {% if message %}
+            alert("{{ message }}");
+        {% endif %}
+    </script>
 </body>
+</html>
