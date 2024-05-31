@@ -57,8 +57,25 @@ def login(request):
             messages.error(request, 'Credenciales inválidas.')
 
     return render(request, 'iniciarsesion.html')
-#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------
+#RECUPERAR CONTRASEÑA -----------------------------------------------------------------------
+#-----------------------------------------------------------
 def changepass(request):
+    if request.method == 'POST':
+        correo = request.POST.get('correo')
+        nueva_contrasena = request.POST.get('nueva_contrasena')
+
+        try:
+            usuario = Usuario.objects.get(correo=correo)
+        except Usuario.DoesNotExist:
+            messages.error(request, 'No se encontró un usuario con ese correo electrónico.')
+            return render(request, 'recuperar_contrasena.html')
+
+        usuario.contrasena = make_password(nueva_contrasena)
+        usuario.save()
+        messages.success(request, 'La contraseña se ha cambiado correctamente.')
+        return redirect('/CambiarContraseña')
+    
     return render(request, 'cambiarcontraseña.html')
 
 def services(request):

@@ -34,35 +34,41 @@
         <div class="col-7" style="height: calc(100vh);">
             <div class="h-100" style="display: block; position: relative;background-color: white; border-radius: 20px 0px 0px 20px; overflow-x: hidden; padding-left: 10%;  padding-right: 10%; ">
                 <h6 class="poppins-semibold" style="text-align: center; padding-top: 10%; padding-bottom: 10%;">RECUPERA TU CUENTA</h6>
-                <div style="align-items: center; align-content: center">
-                    <label for="exampleFormControlInput1" class="form-label poppins-regular" style="color: #787A7C; font-size:small">Nombre de usuario</label>
-                
-                    <input type="email" class="form-control Poppins" id="exampleFormControlInput1" placeholder="Ingresa tu correo electrónico" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller">
-
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn btn-primary poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small;padding: 0.5rem 2rem; text-align: center; margin-top: 5%; align-items: center; align-content: center;">Enviar código</button>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div style="align-items: center; align-content: center">
+                        <label for="correo" class="form-label poppins-regular" style="color: #787A7C; font-size:small">Correo usuario</label>
+                        <input type="email" class="form-control Poppins" id="correo" name="correo" placeholder="Ingresa tu correo electrónico registrado" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
                     </div>
-                
-                    
-                </div>
-                
 
-                <label for="inputPassword5" class="form-label poppins-semibold" style="color: #787A7C; font-size:small; margin-top: 5%;">A continuación ingrese el código que llego a su correo</label>
-                <div style="align-content: right; text-align: right;">
-                    <input 
-                        type="number" 
-                        class="form-control Poppins" 
-                        placeholder="Código de seis (6) digitos" 
-                        style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller"
-                        oninput="this.value = this.value.slice(0, 6);"
-                    >
-                    <div class="col-auto" style="align-items: center; align-content: center;text-align: center; margin-top: 5%;">
-                        <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 5%;padding-right: 5%; ">Restablecer contraseña</button>
+                    <label for="nueva_contrasena" class="form-label poppins-semibold" style="color: #787A7C; font-size:small; margin-top: 5%;">A continuación ingrese su contraseña nueva</label>
+                    <div style="align-content: right; text-align: right;">
+                        <input type="password" id="nueva_contrasena" name="nueva_contrasena" class="form-control password1 Poppins" placeholder="Ingresa tu nueva contraseña" style="background-color: rgba(176, 186, 195, 0.4); font-size:smaller" required>
+                        <span class="fa fa-fw fa-eye password-icon show-password" style="transform: translateY(-150%); margin-right: 2%;"></span>
                     </div>
-                </div>
+                    <div style="align-content: right; text-align: right;">
+                        <div class="col-auto" style="align-items: center; align-content: center;text-align: center; margin-top: 5%;">
+                            <button type="submit" class="btn btn-primary mb-3 poppins" style="background-color: rgba(245, 167, 17, 0.83); border-color: #F38E31; font-size:small; padding-left: 5%;padding-right: 5%;">Restablecer contraseña</button>
+                        </div>
+                    </div>
+
+                    <div style="align-items: center; align-content: center; text-align: center;">
+                        <label class="form-label poppins-regular" style="color: #787A7C; font-size:medium">Ó</label>
+                    </div>
+
+                    <div style="align-items: center; align-content: center; text-align: center;">
+                        <a href="/" style="color: #F38E31;">Inicia sesión</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
 </body>
 </html>
