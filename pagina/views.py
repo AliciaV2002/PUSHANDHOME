@@ -20,5 +20,8 @@ def services(request):
 def condicionesuso(request):
     return render(request, 'condiciones_servicio.html')
 
-def alojaminetos(request):
+def alojamientos(request):
     return render(request, 'ver_alojamientos.html')
+
+def descripcion(request):
+    return render(request, 'descripcion.html')

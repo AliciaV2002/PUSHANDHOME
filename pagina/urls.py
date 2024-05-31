@@ -8,5 +8,6 @@ urlpatterns = [
     path('CambiarContraseña', views.changepass),
     path('NuestrosServicios', views.services),
     path('CondicionesdeUso', views.condicionesuso),
-    path('Alojamientos', views.alojaminetos),
+    path('Alojamientos', views.alojamientos),
+    path('Descripcion_de_alojamientos', views.descripcion),
 ]
