@@ -10,4 +10,5 @@ urlpatterns = [
     path('CondicionesdeUso', views.condicionesuso),
     path('Alojamientos', views.alojamientos),
     path('Descripcion_de_alojamientos', views.descripcion),
+    path('Publicar_alojamientos', views.publicar),
 ]
