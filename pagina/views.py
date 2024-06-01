@@ -90,3 +90,8 @@ def ver_alojamientos(request):
 def alojamientos_pub(request):
     return render(request, 'alojamientos_publicados.html')
 
+def descripcion(request):
+    return render(request, 'descripcion.html')
+
+def publicar(request):
+    return render(request, 'publicar_arrendador.html')
