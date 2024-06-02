@@ -28,9 +28,9 @@ class Propiedad(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     nombre_barrio = models.CharField(max_length=100, default="")
-    servicios = models.CharField(max_length=20, choices=[('Internet', 'Internet'), ('Servicios públicos', 'Servicios públicos')], default='')
+    servicios = models.CharField(max_length=200, choices=[('Internet', 'Internet'), ('Servicios públicos', 'Servicios públicos')], default='')
 
-    requisitos = models.ManyToManyField(Requisito)
+    requisitos = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.direccion}, {self.nombre_barrio}"

@@ -125,6 +125,7 @@ def descripcion(request):
 # PUBLICAR -----------------------------------------------------------------------
 #-----------------------------------------------------------
 def publicar(request):
+    print(request.user.username)
     user = User.objects.get(username=request.user.username)
     # Obtener el objeto Usuario asociado al usuario autenticado
     usuario = Usuario.objects.get(correo=user.email)
@@ -141,7 +142,7 @@ def publicar(request):
             tipo_propiedad = request.POST.get('tipo_propiedad')
             descripcion = request.POST.get('descripcion')
             servicios = request.POST.getlist('servicios')
-            requisitos_ids = request.POST.getlist('requisitos')
+            requisitos = request.POST.getlist('requisitos')
 
             propiedad = Propiedad.objects.create(
                 direccion=direccion,
@@ -152,14 +153,9 @@ def publicar(request):
                 tipo_propiedad=tipo_propiedad,
                 descripcion=descripcion,
                 id_usuario=usuario,  # Asignar la instancia de Usuario
-                nombre_barrio=barrio_nombre,
                 servicios=', '.join(servicios),
+                requisitos=', '.join(requisitos)
             )
-
-            # Asignar los requisitos seleccionados a la propiedad
-            for requisito_id in requisitos_ids:
-                requisito = Requisito.objects.get(id=requisito_id)
-                propiedad.requisitos.add(requisito)
 
             # Guardar las imágenes
             imagenes = request.FILES.getlist('imagenes')
@@ -170,8 +166,7 @@ def publicar(request):
             messages.success(request, 'La propiedad se ha publicado correctamente.')
             return redirect('publicar_alojamiento')
 
-        requisitos_todos = Requisito.objects.all()
-        return render(request, 'alojamientos_publicados.html', {'requisitos': requisitos_todos})        
+        return render(request, 'alojamientos_publicados.html')
     else:
         messages.error(request, 'Debes iniciar sesión como Arrendador para publicar una propiedad.')
         return redirect('/IniciarSesion')

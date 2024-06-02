@@ -1,12 +1,14 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Publicar Propiedad</title>
 </head>
 <body>
+    <h1>{{ usuario.id_usuario }}</h1>
+    
     <h1>Publicar Propiedad</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form action="/Publicar_alojamientos/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="direccion">Dirección:</label>
         <input type="text" id="direccion" name="direccion" required><br>
@@ -49,21 +51,8 @@
             <label for="servicios_publicos">Servicios públicos</label>
         </div><br>
 
-        <label>Requisitos:</label>
-        <select class="form-control" style="width: 150px;" id="requisitos" name="requisitos" multiple required>
-            <option value="">{{requisitos_todos.nombre}}</option>
-            {% for requisito in requisitos_todos %}
-                <option value="{{ requisito.id }}">{{ requisito.nombre }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label>Requisitos:</label>
-         <select class="form-control" style="width: 150px;" id="requisitos" name="requisitos" multiple required>
-
-            <option value="">{{requisitos_todos.first.nombre}}</option>
-             {% for requisito in requisitos_todos %} 
-             <option value="{{ requisito.id }}">{{ requisito.nombre }}</option>
-              {% endfor %} </select><br>
+        <label for="requisitos">Requisitos:</label>
+        <textarea id="requisitos" name="requisitos"></textarea><br>
 
         <label for="imagenes">Imágenes:</label>
         <input type="file" id="imagenes" name="imagenes" multiple required><br>
