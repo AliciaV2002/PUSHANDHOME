@@ -112,15 +112,36 @@ def services(request):
 def condicionesuso(request):
     return render(request, 'condiciones_servicio.html')
 
+
 def ver_alojamientos(request):
-    return render(request, 'ver_alojamientos.html')
+    propiedades = Propiedad.objects.all()
+    contexto = {'propiedades': propiedades}
+    return render(request, 'ver_alojamientos.html', contexto)
 
 #vista de alojamientos arrendador
 def alojamientos_pub(request):
     return render(request, 'alojamientos_publicados.html')
 
 def descripcion(request):
-    return render(request, 'descripcion.html')
+    # Obtener el índice de la propiedad de la URL
+    index = request.GET.get('index')
+    if index is not None:
+        try:
+            # Convertir el índice a entero
+            index = int(index)
+            # Obtener todas las propiedades
+            propiedades = Propiedad.objects.all()
+            # Verificar si el índice está dentro del rango de las propiedades
+            if 0 <= index < len(propiedades):
+                # Obtener la propiedad correspondiente al índice
+                propiedad = propiedades[index]
+                # Pasar la propiedad a la plantilla
+                return render(request, 'descripcion.html', {'propiedad': propiedad})
+        except (ValueError, Propiedad.DoesNotExist):
+            pass
+    # Si el índice no es válido o no se proporciona, redirigir a una página de error o a la página principal
+    return render(request, 'error.html')  # O renderizar una página de error
+
 #-----------------------------------------------------------
 # PUBLICAR -----------------------------------------------------------------------
 #-----------------------------------------------------------
