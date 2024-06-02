@@ -23,12 +23,28 @@ class Propiedad(models.Model):
     direccion = models.CharField(max_length=200)
     numero_contacto = models.CharField(max_length=20)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    tipo_bano = models.CharField(max_length=20, choices=[('Privado', 'Privado'), ('Compartido', 'Compartido')])
+    tipo_bano = models.CharField(max_length=20, choices=[('Baño privado', 'Baño privado'), ('Baño compartido', 'Baño compartido')], default='')
     num_habitaciones = models.IntegerField()
-    tipo_propiedad = models.CharField(max_length=20, choices=[('Casa', 'Casa'), ('Apartamento', 'Apartamento'), ('Habitacion', 'Habitacion')])
+    tipo_propiedad = models.CharField(max_length=20, choices=[('Casa', 'Casa'), ('Apartamento', 'Apartamento'), ('Habitación', 'Habitación')], default='')
     descripcion = models.TextField(blank=True, null=True)
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     id_barrio = models.ForeignKey(Barrio, on_delete=models.CASCADE)
+    servicios = models.CharField(max_length=20, choices=[('Internet', 'Internet'), ('Servicios públicos', 'Servicios públicos')], default='')
+
+    # Requisitos predefinidos
+    REQUISITOS_OPCIONES = (
+        ('No fumar', 'No fumar'),
+        ('Mayores de 18', 'Mayores de 18'),
+        ('No tener mascotas', 'No tener mascotas'),
+        ('Certificado de estudios', 'Certificado de estudios'),
+        ('Persona sola', 'Persona sola'),
+        ('Solo mujeres', 'Solo mujeres'),
+        ('Solo hombres', 'Solo hombres'),
+        ('No hacer fiestas', 'No hacer fiestas'),
+        ('No modificaciones a los enceres', 'No modificaciones a los enceres'),
+        ('No hacer ruidos fuertes', 'No hacer ruidos fuertes'),
+    )
+    requisitos = models.CharField(max_length=200, choices=REQUISITOS_OPCIONES, blank=True)
 
     def __str__(self):
         return f"{self.direccion}, {self.id_barrio.nombre_barrio}"
@@ -36,7 +52,7 @@ class Propiedad(models.Model):
 class Imagen(models.Model):
     id_imagen = models.AutoField(primary_key=True)
     imagen = models.BinaryField()
-    id_propiedad = models.ForeignKey(Propiedad, on_delete=models.CASCADE)
+    id_propiedad = models.ForeignKey(Propiedad, on_delete=models.CASCADE, related_name='imagenes')
 
     def __str__(self):
         return f"Imagen {self.id_imagen}"

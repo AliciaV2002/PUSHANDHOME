@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Publicar Propiedad</title>
+</head>
+<body>
+    <h1>Publicar Propiedad</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" required><br>
+
+        <label for="barrio">Barrio:</label>
+        <input type="text" id="barrio" name="barrio" required><br>
+
+        <label for="numero_contacto">Número de Contacto:</label>
+        <input type="text" id="numero_contacto" name="numero_contacto" required><br>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" step="0.01" required><br>
+
+        <label for="tipo_bano">Tipo de Baño:</label>
+        <select id="tipo_bano" name="tipo_bano" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Baño privado">Baño privado</option>
+            <option value="Baño compartido">Baño compartido</option>
+        </select><br>
+
+        <label for="num_habitaciones">Número de Habitaciones:</label>
+        <input type="number" id="num_habitaciones" name="num_habitaciones" min="1" required><br>
+
+        <label for="tipo_propiedad">Tipo de Propiedad:</label>
+        <select id="tipo_propiedad" name="tipo_propiedad" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Casa">Casa</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Habitación">Habitación</option>
+        </select><br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion"></textarea><br>
+
+        <label for="servicios">Servicios:</label>
+        <div>
+            <input type="checkbox" id="internet" name="servicios" value="Internet">
+            <label for="internet">Internet</label>
+            <input type="checkbox" id="servicios_publicos" name="servicios" value="Servicios públicos">
+            <label for="servicios_publicos">Servicios públicos</label>
+        </div><br>
+
+        <label for="requisitos">Requisitos:</label>
+        <div>
+            <input type="checkbox" id="no_fumar" name="requisitos" value="No fumar">
+            <label for="no_fumar">No fumar</label>
+            <input type="checkbox" id="mayores_18" name="requisitos" value="Mayores de 18">
+            <label for="mayores_18">Mayores de 18</label>
+            <!-- Agrega más opciones de requisitos aquí -->
+        </div><br>
+
+        <label for="imagenes">Imágenes:</label>
+        <input type="file" id="imagenes" name="imagenes" multiple required><br>
+
+        <input type="submit" value="Publicar">
+    </form>
+</body>
+</html>
