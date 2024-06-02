@@ -5,8 +5,10 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import Usuario, Barrio, Propiedad, Imagen
+from .models import Usuario, Propiedad, Imagen, Requisito
 from django.core.files.base import ContentFile
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as autenticacion, logout
 
 # Create your views here.
 def index(request):
@@ -23,17 +25,35 @@ def register(request):
         rol = request.POST.get('rol')
 
         # Verificar si el correo ya está registrado
-        if Usuario.objects.filter(correo=correo).exists():
+        if User.objects.filter(email=correo).exists():
             message = 'El correo electrónico ya está registrado.'
             return render(request, 'registrarse.html', {'message': message})
-        
+
         # Crear un nuevo usuario
-        usuario = Usuario(nombre=nombre, apellido=apellido, correo=correo, contrasena=make_password(contrasena), rol=rol)
+        usuario = User.objects.create_user(
+            username=correo,
+            email=correo,
+            password=contrasena,
+            first_name=nombre,
+            last_name=apellido
+        )
         usuario.save()
 
-    # Redirigir a otra página después del registro exitoso
-        messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
-        return redirect('/Alojamientos')
+        BaseUsuaruo = Usuario(
+            nombre=nombre, 
+            apellido=apellido,
+            correo=correo,
+            contrasena=make_password(contrasena), 
+            rol=rol)
+        
+        BaseUsuaruo.save()
+        # Autenticar al usuario
+        user = authenticate(username=correo, password=contrasena)
+        if user is not None:
+           
+            autenticacion(request, user)
+            messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
+            return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
 
     return render(request, 'registrarse.html')
 #-----------------------------------------------------------
@@ -101,19 +121,17 @@ def alojamientos_pub(request):
 
 def descripcion(request):
     return render(request, 'descripcion.html')
-
-
-
+#-----------------------------------------------------------
+# PUBLICAR -----------------------------------------------------------------------
+#-----------------------------------------------------------
 def publicar(request):
-    if request.method == 'POST':
-        
-        if not request.user.is_authenticated:
-            messages.error(request, 'Debes iniciar sesión para publicar una propiedad.')
-            return redirect('login')
-        if request.user.is_authenticated:
-            # Obtener el usuario actual
-            usuario = request.user.usuario
+    user = User.objects.get(username=request.user.username)
+    # Obtener el objeto Usuario asociado al usuario autenticado
+    usuario = Usuario.objects.get(correo=user.email)
 
+    if usuario.rol == 'Arrendador':
+        if request.method == 'POST':
+            # Obtener los datos del formulario
             direccion = request.POST.get('direccion')
             barrio_nombre = request.POST.get('barrio')
             numero_contacto = request.POST.get('numero_contacto')
@@ -123,13 +141,9 @@ def publicar(request):
             tipo_propiedad = request.POST.get('tipo_propiedad')
             descripcion = request.POST.get('descripcion')
             servicios = request.POST.getlist('servicios')
-            requisitos = request.POST.getlist('requisitos')
+            requisitos_ids = request.POST.getlist('requisitos')
 
-            # Obtener o crear el objeto Barrio
-            barrio, _ = Barrio.objects.get_or_create(nombre_barrio=barrio_nombre)
-
-            # Crear el objeto Propiedad
-            propiedad = Propiedad(
+            propiedad = Propiedad.objects.create(
                 direccion=direccion,
                 numero_contacto=numero_contacto,
                 precio=precio,
@@ -137,12 +151,15 @@ def publicar(request):
                 num_habitaciones=num_habitaciones,
                 tipo_propiedad=tipo_propiedad,
                 descripcion=descripcion,
-                id_usuario=usuario,
-                id_barrio=barrio,
+                id_usuario=usuario,  # Asignar la instancia de Usuario
+                nombre_barrio=barrio_nombre,
                 servicios=', '.join(servicios),
-                requisitos=', '.join(requisitos)
             )
-            propiedad.save()
+
+            # Asignar los requisitos seleccionados a la propiedad
+            for requisito_id in requisitos_ids:
+                requisito = Requisito.objects.get(id=requisito_id)
+                propiedad.requisitos.add(requisito)
 
             # Guardar las imágenes
             imagenes = request.FILES.getlist('imagenes')
@@ -151,9 +168,10 @@ def publicar(request):
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
-        
-        else:
-            messages.error(request, 'Debes iniciar sesión para publicar una propiedad.')
-            return redirect('/IniciarSesion')
+            return redirect('publicar_alojamiento')
 
-    return render(request, 'publicar_alojamiento.html')
+        requisitos_todos = Requisito.objects.all()
+        return render(request, 'alojamientos_publicados.html', {'requisitos': requisitos_todos})        
+    else:
+        messages.error(request, 'Debes iniciar sesión como Arrendador para publicar una propiedad.')
+        return redirect('/IniciarSesion')

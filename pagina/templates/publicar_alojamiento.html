@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,7 @@
 
         <label for="tipo_bano">Tipo de Baño:</label>
         <select id="tipo_bano" name="tipo_bano" required>
-            <option value="">Seleccione una opción</option>
+            <option value="" disabled selected>Seleccione una opción</option>
             <option value="Baño privado">Baño privado</option>
             <option value="Baño compartido">Baño compartido</option>
         </select><br>
@@ -31,7 +32,7 @@
 
         <label for="tipo_propiedad">Tipo de Propiedad:</label>
         <select id="tipo_propiedad" name="tipo_propiedad" required>
-            <option value="">Seleccione una opción</option>
+            <option value="" disabled selected>Seleccione una opción</option>
             <option value="Casa">Casa</option>
             <option value="Apartamento">Apartamento</option>
             <option value="Habitación">Habitación</option>
@@ -40,7 +41,7 @@
         <label for="descripcion">Descripción:</label>
         <textarea id="descripcion" name="descripcion"></textarea><br>
 
-        <label for="servicios">Servicios:</label>
+        <label>Servicios:</label>
         <div>
             <input type="checkbox" id="internet" name="servicios" value="Internet">
             <label for="internet">Internet</label>
@@ -48,14 +49,21 @@
             <label for="servicios_publicos">Servicios públicos</label>
         </div><br>
 
-        <label for="requisitos">Requisitos:</label>
-        <div>
-            <input type="checkbox" id="no_fumar" name="requisitos" value="No fumar">
-            <label for="no_fumar">No fumar</label>
-            <input type="checkbox" id="mayores_18" name="requisitos" value="Mayores de 18">
-            <label for="mayores_18">Mayores de 18</label>
-            <!-- Agrega más opciones de requisitos aquí -->
-        </div><br>
+        <label>Requisitos:</label>
+        <select class="form-control" style="width: 150px;" id="requisitos" name="requisitos" multiple required>
+            <option value="">{{requisitos_todos.nombre}}</option>
+            {% for requisito in requisitos_todos %}
+                <option value="{{ requisito.id }}">{{ requisito.nombre }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label>Requisitos:</label>
+         <select class="form-control" style="width: 150px;" id="requisitos" name="requisitos" multiple required>
+
+            <option value="">{{requisitos_todos.first.nombre}}</option>
+             {% for requisito in requisitos_todos %} 
+             <option value="{{ requisito.id }}">{{ requisito.nombre }}</option>
+              {% endfor %} </select><br>
 
         <label for="imagenes">Imágenes:</label>
         <input type="file" id="imagenes" name="imagenes" multiple required><br>
