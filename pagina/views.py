@@ -154,6 +154,7 @@ def publicar(request):
                 descripcion=descripcion,
                 id_usuario=usuario,  # Asignar la instancia de Usuario
                 servicios=', '.join(servicios),
+                nombre_barrio = barrio_nombre,
                 requisitos=', '.join(requisitos)
             )
 
@@ -164,7 +165,7 @@ def publicar(request):
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
-            return redirect('publicar_alojamiento')
+            return redirect('/Alojamientos')
 
         return render(request, 'alojamientos_publicados.html')
     else:

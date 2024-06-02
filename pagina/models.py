@@ -35,9 +35,10 @@ class Propiedad(models.Model):
     def __str__(self):
         return f"{self.direccion}, {self.nombre_barrio}"
 
+
 class Imagen(models.Model):
     id_imagen = models.AutoField(primary_key=True)
-    imagen = models.BinaryField()
+    imagen = models.ImageField(upload_to='imagenes/')  # Cambia BinaryField por ImageField
     id_propiedad = models.ForeignKey(Propiedad, on_delete=models.CASCADE, related_name='imagenes')
 
     def __str__(self):
