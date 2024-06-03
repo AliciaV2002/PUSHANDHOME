@@ -21,6 +21,12 @@
     <script defer src="{% static 'functions.js' %}"></script>
     <title>Push & Home</title>
     <link rel="icon" type = "image" href="{% static 'imagenes/Logo.png' %}" style = "width:100%">
+    <style>
+        .card-img-top {
+            height: 160px; /* Altura fija para las imágenes */
+            object-fit: cover; /* Ajuste de la imagen dentro del contenedor */
+        }
+    </style>
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -247,7 +253,7 @@
     <script>
         // Datos de las propiedades
         var propiedades = [
-            {% for propiedad in propiedades reversed %} // Recorrer en orden inverso
+            {% for propiedad in propiedades reversed %}
             {
                 id_propiedad: "{{ propiedad.id_propiedad }}",
                 direccion: "{{ propiedad.direccion }}",
@@ -257,20 +263,26 @@
                 num_habitaciones: "{{ propiedad.num_habitaciones }}",
                 tipo_propiedad: "{{ propiedad.tipo_propiedad }}",
                 descripcion: "{{ propiedad.descripcion }}",
-                id_usuario: "{{ propiedad.id_usuario.id }}",
+                id_usuario: "{{ propiedad.id_usuario }}",
                 nombre_barrio: "{{ propiedad.nombre_barrio }}",
                 servicios: "{{ propiedad.servicios }}",
-                requisitos: "{{ propiedad.requisitos }}"
+                requisitos: "{{ propiedad.requisitos }}",
+                imagenes: [
+                    {% for imagen in propiedad.imagenes %}
+                    "{{ imagen }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]
             }{% if not forloop.last %},{% endif %}
             {% endfor %}
         ];
     
         // Función para generar las tarjetas de publicación
         function generarTarjeta(propiedad, index) {
+            var imagenUrl = propiedad.imagenes.length > 0 ? propiedad.imagenes[0] : '';
             return `
             <div class="col-4">
                 <div class="card" style="width: 15rem; height: 300px; align-content: center;">
-                    <img src="{% static 'imagenes/ejemplo.png' %}" class="card-img-top" style="width: 15rem;">
+                    <img src="${imagenUrl}" class="card-img-top" style="width: 15rem;">
                     <div class="card-body">
                         <h5 class="card-title">${propiedad.tipo_propiedad}</h5>
                         <p class="card-text">${propiedad.direccion}, ${propiedad.nombre_barrio}</p>
@@ -286,6 +298,17 @@
             publicacionesContainer.innerHTML = '';
             propiedades.forEach(function(propiedad, index) {
                 publicacionesContainer.innerHTML += generarTarjeta(propiedad, index);
+            });
+    
+            // Agregar evento de clic a los enlaces "Ver más"
+            var verMasLinks = document.querySelectorAll('.ver-mas');
+            verMasLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var index = this.dataset.index;
+                    var propiedad = propiedades[index];
+                    enviarDatosYActualizarPagina(propiedad);
+                });
             });
         }
     
@@ -308,19 +331,6 @@
             xhr.send(data);
         }
     
-        // Agregar evento de clic a los enlaces "Ver más"
-        document.addEventListener('DOMContentLoaded', function() {
-            var verMasLinks = document.querySelectorAll('.ver-mas');
-            verMasLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    var index = this.dataset.index;
-                    var propiedad = propiedades[index];
-                    enviarDatosYActualizarPagina(propiedad);
-                });
-            });
-        });
-    
         // Llamar a la función para mostrar las publicaciones
         mostrarPublicaciones();
     </script>
@@ -329,3 +339,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+    

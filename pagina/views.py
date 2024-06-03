@@ -50,11 +50,12 @@ def register(request):
         BaseUsuaruo.save()
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
-        if user is not None:
-            autenticacion(request, user)
-            messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
-            return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
-
+        if BaseUsuaruo.rol == 'Arrendador':
+            if user is not None:
+                autenticacion(request, user)
+                return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
+        else:
+            return render(request,'ver_alojamientos.html', {'usuario': BaseUsuaruo})
     return render(request, 'registrarse.html')
 #-----------------------------------------------------------
 # INICIAR SESIÓN -----------------------------------------------------------------------
@@ -112,11 +113,38 @@ def services(request):
 def condicionesuso(request):
     return render(request, 'condiciones_servicio.html')
 
-
 def ver_alojamientos(request):
-    propiedades = Propiedad.objects.all()
-    contexto = {'propiedades': propiedades}
-    print("contexto: ", contexto)
+    propiedades = Propiedad.objects.all().prefetch_related('imagenes')
+    datos_propiedades = []
+
+    for propiedad in propiedades:
+        imagenes = []
+        for imagen in propiedad.imagenes.all():
+            try:
+                if imagen.imagen:  # Verificar si hay un archivo asociado
+                    imagen_url = imagen.imagen.url
+                    imagenes.append(imagen_url)
+            except ValueError:
+                # Manejar el caso en el que la imagen no tiene un archivo asociado
+                pass
+        print(imagenes)
+        datos_propiedad = {
+            'id_propiedad': propiedad.id_propiedad,
+            'direccion': propiedad.direccion,
+            'numero_contacto': propiedad.numero_contacto,
+            'precio': propiedad.precio,
+            'tipo_bano': propiedad.tipo_bano,
+            'num_habitaciones': propiedad.num_habitaciones,
+            'tipo_propiedad': propiedad.tipo_propiedad,
+            'descripcion': propiedad.descripcion,
+            'id_usuario': propiedad.id_usuario.id_usuario,  # Acceder a la clave primaria
+            'nombre_barrio': propiedad.nombre_barrio,
+            'servicios': propiedad.servicios,
+            'requisitos': propiedad.requisitos,
+            'imagenes': imagenes,
+        }
+        datos_propiedades.append(datos_propiedad)
+    contexto = {'propiedades': datos_propiedades}
     return render(request, 'ver_alojamientos.html', contexto)
 
 #vista de alojamientos arrendador
@@ -124,12 +152,10 @@ def alojamientos_pub(request):
     return render(request, 'alojamientos_publicados.html')
 
 
-
-
-
 def descripcion(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        print("hola", data.get("imagenes"))
         return render(request, 'descripcion.html', {'propiedad': data})
     else:
         # Renderizar la plantilla 'descripcion.html' sin datos si la solicitud no es POST
@@ -175,7 +201,7 @@ def publicar(request):
             # Guardar las imágenes
             imagenes = request.FILES.getlist('imagenes')
             for imagen in imagenes:
-                img = Imagen(imagen=ContentFile(imagen.read()), id_propiedad=propiedad)
+                img = Imagen(imagen = imagen,id_propiedad = propiedad )
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
