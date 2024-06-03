@@ -51,12 +51,12 @@ def register(request):
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
 
-        if user is not None:
-            autenticacion(request, user)
-            if BaseUsuaruo.rol == 'Arrendador':
-                return redirect('/Publicar_alojamientos', usuario_id=BaseUsuaruo.id_usuario)
-            else:
-                return redirect('/Alojamientos', usuario_id=BaseUsuaruo.id_usuario)
+        # if user is not None:
+        #     autenticacion(request, user)
+        #     if BaseUsuaruo.rol == 'Arrendador':
+        #         return redirect('/Publicar_alojamientos', usuario_id=BaseUsuaruo.id_usuario)
+        #     else:
+        #         return redirect('/Alojamientos', usuario_id=BaseUsuaruo.id_usuario)
 
         if BaseUsuaruo.rol == 'Arrendador':
             if user is not None:
@@ -207,7 +207,8 @@ def publicar(request):
                 id_usuario=usuario,  # Asignar la instancia de Usuario
                 servicios=', '.join(servicios),
                 nombre_barrio = barrio_nombre,
-                requisitos=requisitos
+                requisitos=', '.join(requisitos)
+
             )
 
             # Guardar las imágenes

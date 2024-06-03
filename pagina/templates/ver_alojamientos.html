@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-3">
                 <div class="sidebar">
-                    <div class="accordion" id="multiAccordion" style="width: 250px; padding-top: 3%;">
+                    <div class="accordion" id="multiAccordion" style="width: 270px; padding-top: 3%;">
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -116,6 +116,12 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                                     <label class="form-check-label" for="flexCheckChecked">
+                                        $100.000 - $300.000
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
                                         $300.000 - $500.000
                                     </label>
                                 </div>
@@ -134,66 +140,24 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                                     <label class="form-check-label" for="flexCheckChecked">
-                                        $900-000 - Más
+                                        $900.000 - $1.100.000
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        $1.100.000 - $1.500.000
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        $1.500.000 - $2.000.000
                                     </label>
                                 </div>
                             </div>
                           </div>
                         </div>
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                               Preferencias
-                              </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse" aria-labelledby="headingThree">
-                              <div class="accordion-body">
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                      <label class="form-check-label" for="flexCheckChecked">
-                                          Baño privado
-                                      </label>
-                                  </div>
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                      <label class="form-check-label" for="flexCheckChecked">
-                                          Baño compartido
-                                      </label>
-                                  </div>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                               Dormitorios
-                              </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse" aria-labelledby="headingThree">
-                              <div class="accordion-body">
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                      <label class="form-check-label" for="flexCheckChecked">
-                                          1
-                                      </label>
-                                  </div>
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                      <label class="form-check-label" for="flexCheckChecked">
-                                          2
-                                      </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        3+
-                                    </label>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="margin-top: 10px;margin-left: 40px;">Aplicar filtros</button>
                     </div> 
 
                     
@@ -281,22 +245,60 @@
             var imagenUrl = propiedad.imagenes.length > 0 ? propiedad.imagenes[0] : '';
             return `
             <div class="col-4">
-                <div class="card" style="width: 15rem; height: 300px; align-content: center;">
+                <div class="card" style="width: 15rem; height: 330px; align-content: center;">
                     <img src="${imagenUrl}" class="card-img-top" style="width: 15rem;">
                     <div class="card-body">
                         <h5 class="card-title">${propiedad.tipo_propiedad}</h5>
                         <p class="card-text">${propiedad.direccion}, ${propiedad.nombre_barrio}</p>
-                        <a href="#" class="btn btn-primary ver-mas" data-index="${index}">Ver más</a>
+                        <a href="#" class="btn btn-warning ver-mas" data-index="${index}">Ver más</a>
                     </div>
                 </div>
             </div>`;
+        }
+    
+        // Función para filtrar las propiedades
+        function filtrarPropiedades() {
+            var filtros = {
+                tipo_propiedad: [],
+                rango_precios: [],
+                tiene_bano_privado: false,
+                tiene_bano_compartido: false,
+                num_habitaciones: []
+            };
+
+            // Obtener los filtros seleccionados
+            var tiposPropiedadSeleccionados = document.querySelectorAll('#collapseOne .form-check-input:checked');
+            tiposPropiedadSeleccionados.forEach(function(checkbox) {
+                filtros.tipo_propiedad.push(checkbox.nextElementSibling.textContent.trim());
+            });
+
+            var rangosPreciosSeleccionados = document.querySelectorAll('#collapseTwo .form-check-input:checked');
+            rangosPreciosSeleccionados.forEach(function(checkbox) {
+                filtros.rango_precios.push(checkbox.nextElementSibling.textContent.trim());
+            });
+
+            // Filtrar las propiedades según los criterios seleccionados
+            var propiedadesFiltradas = propiedades.filter(function(propiedad) {
+                var cumpleFiltroTipoPropiedad = filtros.tipo_propiedad.length === 0 || filtros.tipo_propiedad.includes(propiedad.tipo_propiedad);
+                var cumpleFiltroRangoPrecios = filtros.rango_precios.length === 0 || filtros.rango_precios.some(function(rango) {
+                    var [min, max] = rango.split(' - ').map(function(valor) {
+                        return parseFloat(valor.replace('$', '').replace('.', ''));
+                    });
+                    return propiedad.precio >= min && propiedad.precio <= max;
+                });
+
+                return cumpleFiltroTipoPropiedad && cumpleFiltroRangoPrecios;
+            });
+
+            return propiedadesFiltradas;
         }
     
         // Función para mostrar las publicaciones
         function mostrarPublicaciones() {
             var publicacionesContainer = document.getElementById('publicaciones-container');
             publicacionesContainer.innerHTML = '';
-            propiedades.forEach(function(propiedad, index) {
+            var propiedadesFiltradas = filtrarPropiedades();
+            propiedadesFiltradas.forEach(function(propiedad, index) {
                 publicacionesContainer.innerHTML += generarTarjeta(propiedad, index);
             });
     
@@ -306,7 +308,7 @@
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
                     var index = this.dataset.index;
-                    var propiedad = propiedades[index];
+                    var propiedad = propiedadesFiltradas[index];
                     enviarDatosYActualizarPagina(propiedad);
                 });
             });
@@ -333,6 +335,14 @@
     
         // Llamar a la función para mostrar las publicaciones
         mostrarPublicaciones();
+    
+        /// Agregar evento de cambio a los filtros
+        var filtrosCheckboxes = document.querySelectorAll('#multiAccordion .form-check-input');
+        filtrosCheckboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                mostrarPublicaciones();
+            });
+        });
     </script>
     
     <!-- Bootstrap Bundle with Popper -->

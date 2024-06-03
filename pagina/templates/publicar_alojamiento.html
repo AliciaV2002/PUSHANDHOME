@@ -41,7 +41,7 @@
         </div>
     </nav>
     
-    <h1>Publicar Propiedad</h1>
+    <h3 class="">Publicar Propiedad</h3>
     <!--Inicio de contenido-->
     <div class="container-xxl" style="padding: 2% 2%;">
         <form action="/Publicar_alojamientos/" method="post" enctype="multipart/form-data">
@@ -50,46 +50,46 @@
                 <div class="col-3">
                     <div class="card text-center">
                         <div class="body" style="padding: 2% 0%;">
-                            <label for="requisitos">Requisitos:</label>
+                            <label for="requisitos">Requisitos:</label><br>
                             <textarea style="border-radius: 20px; padding: 1% 2%; margin-bottom: 5%;" id="requisitos" name="requisitos"></textarea><br>
 
-                            <h6 style="padding-top: 10%;">Detalles del alojamiento</h6>
+                            <h6 style="padding-top: 10%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Detalles del alojamiento</h6>
                             
                             <div style="padding: 5% 8%; padding-bottom: 5%;">
                                 <label for="tipo_propiedad">Tipo de Propiedad:</label>
-                                <select id="tipo_propiedad" name="tipo_propiedad" required>
+                                <select class="form-control" style="font-size: small;" id="tipo_propiedad" name="tipo_propiedad" required>
                                     <option value="" disabled selected>Seleccione una opción</option>
                                     <option value="Casa">Casa</option>
                                     <option value="Apartamento">Apartamento</option>
                                     <option value="Habitación">Habitación</option>
                                 </select><br>
 
-                                <label for="num_habitaciones" style="font-size: small; margin: 5% 0%;">Número de Habitaciones: </label>
-                                <input type="number" id="num_habitaciones" name="num_habitaciones" min="1" required><br>
+                                <label for="num_habitaciones" style="margin: 5% 0%;">Número de Habitaciones: </label>
+                                <input class="form-control" style="font-size: small;" type="number" id="num_habitaciones" name="num_habitaciones" min="1" required><br>
 
-                                <label for="tipo_bano" style="font-size: small; margin: 5% 0%;">Tipo de Baño: </label>
-                                <select id="tipo_bano" name="tipo_bano" required>
+                                <label for="tipo_bano" style="margin: 5% 0%;">Tipo de Baño: </label>
+                                <select class="form-control" style="font-size: small;" id="tipo_bano" name="tipo_bano" required>
                                     <option value="" disabled selected>Seleccione una opción</option>
                                     <option value="Baño privado">Baño privado</option>
                                     <option value="Baño compartido">Baño compartido</option>
                                 </select><br>
                             </div>
 
-                            <h6 style="padding-top: 10%;">Información del alojamiento</h6>
+                            <h6 style="padding-top: 10%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Información del alojamiento</h6>
 
                             <p style="font-size: small ;color: rgba(0, 0, 1, 0.5);">
                                 Ejemplo: "Cll 3 bis#65-32A"
                             </p>
 
                             <div style="padding: 0% 8%; padding-bottom: 5%;">
-                                <label for="direccion" >Dirección:</label>
-                                <input type="text" id="direccion" style="font-size: small; margin: 5% 0%;" name="direccion" required><br>
+                                <label for="direccion" >Dirección:</label><br>
+                                <input class="form-control" type="text" id="direccion" style="font-size: small; margin: 5% 0%;" name="direccion" required>
 
-                                <label for="barrio">Barrio:</label>
-                                <input type="text" id="barrio" style="font-size: small; margin: 5% 0%;" name="barrio" required><br>
+                                <label for="barrio">Barrio:</label><br>
+                                <input class="form-control" type="text" id="barrio" style="font-size: small; margin: 5% 0%;" name="barrio" required>
 
-                                <label for="numero_contacto">Número de Contacto:</label>
-                                <input type="text" id="numero_contacto" style="font-size: small; margin: 5% 0%;" name="numero_contacto" required ><br>
+                                <label for="numero_contacto">Número de Contacto:</label><br>
+                                <input class="form-control" type="text" id="numero_contacto" style="font-size: small; margin: 5% 0%;" name="numero_contacto" required ><br>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         <div class="col">
                             <div class="card">
                                 <div class="card-title" style="padding: 0% 5%;">
-                                    <h6 class="poppins-semibold" style="font-size: medium; padding-top: 4%;">Descripción del alojamiento</h6>
+                                    <h6 class="poppins-semibold" style="font-size: medium; padding-top: 4%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Descripción del alojamiento</h6>
                                 </div>
                                 <div class="card-body" style="padding: 0% 4%;">
                                     <textarea style="border-radius: 20px; padding: 1% 2%; margin-bottom: 5%;" name="descripcion" id="descripcion" cols="80" rows="7" placeholder="La descripción del estado del alojamiento debe contar la realidad de cómo se encuentra en estos momentos. Debe mencionar todas las áreas que necesiten algún arreglo o reparación, así como las partes que se vean bien y hayan sido renovadas recientemente. Una descripción honesta ayudará a que la persona interesada en arrendar el lugar sepa exactamente cómo lo va a encontrar, sin sorpresas, y pueda tomar la mejor decisión."></textarea>
@@ -132,15 +132,19 @@
                                             <h5 class="card-title">PRECIO</h5>
                                         </div>
                                         <div class="col-4"> 
-                                            <input type="number" id="precio" name="precio" step="1000"  min="0" max="2000000" required><br>
+                                            <input class="form-control" style="font-size: small;" type="number" id="precio" name="precio" step="1000"  min="0" max="2000000" required><br>
                                         </div>
                                         <div class="col-6">                                         
-                                            <h6 class="card-title">Incluye: </h6>
-                                            <div>
-                                                <input type="checkbox" id="internet" name="servicios" value="Internet">
-                                                <label for="internet" style="margin-left: -15%;" class="form-check label">Internet</label>
-                                                <input type="checkbox" id="servicios_publicos" name="servicios" value="Servicios públicos">
-                                                <label for="servicios_publicos" style="margin-left: -30%;" class="form-check label">Servicios públicos</label>
+                                            <h6 class="card-title">Incluye: </h6><br>
+                                            <div class="form-check form-check-inline">
+                                                <div>
+                                                    <input type="checkbox" id="internet" name="servicios" value="Internet">
+                                                    <label for="internet" style="margin-left: -15%;" class="form-check label">Internet</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" id="servicios_publicos" name="servicios" value="Servicios públicos">
+                                                    <label for="servicios_publicos" style="margin-left: -30%;" class="form-check label">Servicios públicos</label>
+                                                </div> 
                                             </div><br>
                                         </div>
                                     </div>
@@ -158,7 +162,7 @@
                         </div>
                     </div>
                     <div class="text-end" style="margin-top: calc(200%)">
-                        <input type="submit" value="Publicar">
+                        <input type="submit" class="btn-warning" value="Publicar">
                     </div>
                 </div>
             </div>

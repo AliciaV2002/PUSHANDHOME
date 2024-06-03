@@ -36,10 +36,7 @@
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary poppins-bold" style="border-bottom: 1px solid black; font-size: small; background-color: white;">
         <div class="container-fluid">
-            <form class="d-flex navbar-brand" role="search" style="width: 30%;">
-                <input class="form-control me-2 Poppins" type="search" placeholder="Escribe tu punto de busqueda" aria-label="Search" style="font-size: small;">
-                <button class="btn color" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            </form>
+            <a class="nav-link active luckiest-guy-regular" style="font-size: x-large; color: #F5A711;" aria-current="page" href="/">PUSH & HOME</a>
             <div class="justify-content-end">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -80,16 +77,29 @@
             <div class="col-3">
                 <div class="card text-center">
                     <div class="body" style="padding: 2% 0%;">
-                        <h6>Requisitos del alojamiento</h6>
+                        <h6 style="padding-top: 5%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Requisitos del alojamiento</h6>
                         <div style="padding: 1% 8%;">
                             <!-- Mostrar los requisitos de la propiedad -->
                             {{ propiedad.requisitos|linebreaks }}
                         </div>
-                        <h6 style="padding-top: 5%;">Detalles del alojamiento</h6>
+                        <h6 style="padding-top: 5%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Detalles de contacto</h6>
                         <div style="padding: 1% 8%;">
-                            <input type="number" class="form-control" style="font-size: small; margin: 5% 0%;" placeholder="Número de habitaciones" value="{{ propiedad.num_habitaciones }}" disabled>
-                            <input type="text" class="form-control" placeholder="Baño (compartido o privado)" style="font-size: small;" value="{{ propiedad.tipo_bano }}" disabled>
+                            <label for="">Dirección</label>
+                            <input type="text" class="form-control" placeholder="Dirección" style="font-size: small; margin: 5% 0%;" value="{{ propiedad.direccion }}" disabled>
+                            <label for="">Barrio</label>
+                            <input type="text" class="form-control" placeholder="Dirección" style="font-size: small; margin: 5% 0%;" value="{{ propiedad.nombre_barrio }}" disabled>
+                            <label for="">Teléfono de contacto</label>
+                            <input type="text" class="form-control" placeholder="Dirección" style="font-size: small; margin: 5% 0%;" value="{{ propiedad.numero_contacto }}" disabled>
                         </div>
+
+                        <h6 style="padding-top: 5%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Detalles del alojamiento</h6>
+                        <div style="padding: 1% 8%;">
+                            <label for="">Número de habitaciones</label>
+                            <input type="number" class="form-control" style="font-size: small; margin: 5% 0%;" placeholder="Número de habitaciones" value="{{ propiedad.num_habitaciones }}" disabled>
+                            <label for="">Tipo de baño</label>
+                            <input type="text" class="form-control" placeholder="Baño (compartido o privado)" style="font-size: small; margin: 5% 0%;" value="{{ propiedad.tipo_bano }}" disabled>
+                        </div>
+
                         <!-- No hay campo para la descripción del arrendatario en los datos proporcionados -->
                     </div>
                 </div>
@@ -120,12 +130,12 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <h2 class="poppins-semibold" style="font-size: 1.5em; padding-top: 5%;">Descripción del alojamiento</h2>
+                        <h2 class="poppins-semibold" style="text-align:center; font-size: 1.5em; padding-top: 5%; color: #F5A711;">Descripción del alojamiento</h2>
                         <div style="padding: 2% 4%;">
-                            <textarea name="desc" id="desc2" cols="86" rows="10" disabled>{{ propiedad.descripcion }}</textarea>
+                            <textarea name="desc" id="desc2" cols="86" rows="10" style="border-radius: 15px;" disabled>{{ propiedad.descripcion }}</textarea>
                         </div>
                     </div>
-                </div>
+                </div>  
                 <div class="row">
                     <div class="col">
                         <div class="card">
