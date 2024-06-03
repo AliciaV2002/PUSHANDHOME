@@ -9,6 +9,7 @@ from .models import Usuario, Propiedad, Imagen, Requisito
 from django.core.files.base import ContentFile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as autenticacion, logout
+import json
 
 # Create your views here.
 def index(request):
@@ -49,12 +50,20 @@ def register(request):
         BaseUsuaruo.save()
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
+
         if user is not None:
             autenticacion(request, user)
             if BaseUsuaruo.rol == 'Arrendador':
                 return redirect('/Publicar_alojamientos', usuario_id=BaseUsuaruo.id_usuario)
             else:
                 return redirect('/Alojamientos', usuario_id=BaseUsuaruo.id_usuario)
+
+        if BaseUsuaruo.rol == 'Arrendador':
+            if user is not None:
+                autenticacion(request, user)
+                return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
+        else:
+            return render(request,'ver_alojamientos.html', {'usuario': BaseUsuaruo})
 
     return render(request, 'registrarse.html')
 #-----------------------------------------------------------
@@ -113,9 +122,39 @@ def condicionesuso(request):
 #-----------------------------------------------------------
 #VER LOS ALOJAMIENTOS -----------------------------------------------------------------------
 #-----------------------------------------------------------
+
 def ver_alojamientos(request):
-    propiedades = Propiedad.objects.all()
-    contexto = {'propiedades': propiedades}
+    propiedades = Propiedad.objects.all().prefetch_related('imagenes')
+    datos_propiedades = []
+
+    for propiedad in propiedades:
+        imagenes = []
+        for imagen in propiedad.imagenes.all():
+            try:
+                if imagen.imagen:  # Verificar si hay un archivo asociado
+                    imagen_url = imagen.imagen.url
+                    imagenes.append(imagen_url)
+            except ValueError:
+                # Manejar el caso en el que la imagen no tiene un archivo asociado
+                pass
+        print(imagenes)
+        datos_propiedad = {
+            'id_propiedad': propiedad.id_propiedad,
+            'direccion': propiedad.direccion,
+            'numero_contacto': propiedad.numero_contacto,
+            'precio': propiedad.precio,
+            'tipo_bano': propiedad.tipo_bano,
+            'num_habitaciones': propiedad.num_habitaciones,
+            'tipo_propiedad': propiedad.tipo_propiedad,
+            'descripcion': propiedad.descripcion,
+            'id_usuario': propiedad.id_usuario.id_usuario,  # Acceder a la clave primaria
+            'nombre_barrio': propiedad.nombre_barrio,
+            'servicios': propiedad.servicios,
+            'requisitos': propiedad.requisitos,
+            'imagenes': imagenes,
+        }
+        datos_propiedades.append(datos_propiedad)
+    contexto = {'propiedades': datos_propiedades}
     return render(request, 'ver_alojamientos.html', contexto)
 
 #vista de alojamientos arrendador
@@ -124,25 +163,15 @@ def alojamientos_pub(request):
     contexto = {'propiedades': propiedades}
     return render(request, 'alojamientos_publicados.html',contexto)
 
+
 def descripcion(request):
-    # Obtener el índice de la propiedad de la URL
-    index = request.GET.get('index')
-    if index is not None:
-        try:
-            # Convertir el índice a entero
-            index = int(index)
-            # Obtener todas las propiedades
-            propiedades = Propiedad.objects.all()
-            # Verificar si el índice está dentro del rango de las propiedades
-            if 0 <= index < len(propiedades):
-                # Obtener la propiedad correspondiente al índice
-                propiedad = propiedades[index]
-                # Pasar la propiedad a la plantilla
-                return render(request, 'descripcion.html', {'propiedad': propiedad})
-        except (ValueError, Propiedad.DoesNotExist):
-            pass
-    # Si el índice no es válido o no se proporciona, redirigir a una página de error o a la página principal
-    return render(request, 'error.html')  # O renderizar una página de error
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print("hola", data.get("imagenes"))
+        return render(request, 'descripcion.html', {'propiedad': data})
+    else:
+        # Renderizar la plantilla 'descripcion.html' sin datos si la solicitud no es POST
+        return render(request, 'descripcion.html')
 
 #-----------------------------------------------------------
 # PUBLICAR -----------------------------------------------------------------------
@@ -185,6 +214,7 @@ def publicar(request):
             imagenes = request.FILES.getlist('imagenes')
             for imagen in imagenes:
                 img = Imagen(imagen=imagen, id_propiedad=propiedad)
+                img = Imagen(imagen = imagen,id_propiedad = propiedad )
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
