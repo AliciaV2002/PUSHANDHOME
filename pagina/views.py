@@ -9,6 +9,7 @@ from .models import Usuario, Propiedad, Imagen, Requisito
 from django.core.files.base import ContentFile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as autenticacion, logout
+import json
 
 # Create your views here.
 def index(request):
@@ -50,7 +51,6 @@ def register(request):
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
         if user is not None:
-           
             autenticacion(request, user)
             messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
             return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
@@ -116,31 +116,24 @@ def condicionesuso(request):
 def ver_alojamientos(request):
     propiedades = Propiedad.objects.all()
     contexto = {'propiedades': propiedades}
+    print("contexto: ", contexto)
     return render(request, 'ver_alojamientos.html', contexto)
 
 #vista de alojamientos arrendador
 def alojamientos_pub(request):
     return render(request, 'alojamientos_publicados.html')
 
+
+
+
+
 def descripcion(request):
-    # Obtener el índice de la propiedad de la URL
-    index = request.GET.get('index')
-    if index is not None:
-        try:
-            # Convertir el índice a entero
-            index = int(index)
-            # Obtener todas las propiedades
-            propiedades = Propiedad.objects.all()
-            # Verificar si el índice está dentro del rango de las propiedades
-            if 0 <= index < len(propiedades):
-                # Obtener la propiedad correspondiente al índice
-                propiedad = propiedades[index]
-                # Pasar la propiedad a la plantilla
-                return render(request, 'descripcion.html', {'propiedad': propiedad})
-        except (ValueError, Propiedad.DoesNotExist):
-            pass
-    # Si el índice no es válido o no se proporciona, redirigir a una página de error o a la página principal
-    return render(request, 'error.html')  # O renderizar una página de error
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        return render(request, 'descripcion.html', {'propiedad': data})
+    else:
+        # Renderizar la plantilla 'descripcion.html' sin datos si la solicitud no es POST
+        return render(request, 'descripcion.html')
 
 #-----------------------------------------------------------
 # PUBLICAR -----------------------------------------------------------------------
