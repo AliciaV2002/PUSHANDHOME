@@ -81,8 +81,7 @@
             </div>
         </div>
     </nav>
-    
-    <h3 class="">Publicar Propiedad</h3>
+
     <!--Inicio de contenido-->
     <div class="container-xxl" style="padding: 2% 2%;">
         <form action="/Publicar_alojamientos/" method="post" enctype="multipart/form-data">
@@ -241,6 +240,14 @@
                 reader.readAsDataURL(file);
             }
         });
+    </script>
+
+    <script>
+        function logout() {
+            // Realizar aquí las acciones de logout, como redireccionar a la página de logout o enviar una solicitud AJAX al backend para cerrar la sesión
+            // Por ejemplo:
+            window.location.href = '/CerrarSesion/';
+        }
     </script>
     
 </body>
