@@ -50,16 +50,16 @@ def register(request):
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
         if user is not None:
-           
             autenticacion(request, user)
-            messages.success(request, 'Registro exitoso. ¡Bienvenido a Push & Home!')
-            return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
+            if BaseUsuaruo.rol == 'Arrendador':
+                return redirect('/Publicar_alojamientos', usuario_id=BaseUsuaruo.id_usuario)
+            else:
+                return redirect('/Alojamientos', usuario_id=BaseUsuaruo.id_usuario)
 
     return render(request, 'registrarse.html')
 #-----------------------------------------------------------
 # INICIAR SESIÓN -----------------------------------------------------------------------
 #-----------------------------------------------------------
-
 def login(request):
     if request.method == 'POST':
         correo = request.POST.get('correo')
@@ -74,7 +74,6 @@ def login(request):
         if check_password(contrasena, usuario.contrasena):
             # Iniciar sesión
             request.session['usuario_id'] = usuario.id_usuario
-            messages.success(request, 'Inicio de sesión exitoso.')
             rolUser= usuario.rol
 
             if rolUser == 'Arrendador':
@@ -111,8 +110,9 @@ def services(request):
 
 def condicionesuso(request):
     return render(request, 'condiciones_servicio.html')
-
-
+#-----------------------------------------------------------
+#VER LOS ALOJAMIENTOS -----------------------------------------------------------------------
+#-----------------------------------------------------------
 def ver_alojamientos(request):
     propiedades = Propiedad.objects.all()
     contexto = {'propiedades': propiedades}
@@ -120,7 +120,9 @@ def ver_alojamientos(request):
 
 #vista de alojamientos arrendador
 def alojamientos_pub(request):
-    return render(request, 'alojamientos_publicados.html')
+    propiedades = Propiedad.objects.all()
+    contexto = {'propiedades': propiedades}
+    return render(request, 'alojamientos_publicados.html',contexto)
 
 def descripcion(request):
     # Obtener el índice de la propiedad de la URL
@@ -176,13 +178,13 @@ def publicar(request):
                 id_usuario=usuario,  # Asignar la instancia de Usuario
                 servicios=', '.join(servicios),
                 nombre_barrio = barrio_nombre,
-                requisitos=', '.join(requisitos)
+                requisitos=requisitos
             )
 
             # Guardar las imágenes
             imagenes = request.FILES.getlist('imagenes')
             for imagen in imagenes:
-                img = Imagen(imagen=ContentFile(imagen.read()), id_propiedad=propiedad)
+                img = Imagen(imagen=imagen, id_propiedad=propiedad)
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
