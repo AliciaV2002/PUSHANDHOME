@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login 
 from django.contrib.auth.decorators import login_required
 from .models import Usuario, Propiedad, Imagen, Requisito
 from django.core.files.base import ContentFile
@@ -30,45 +30,45 @@ def register(request):
             message = 'El correo electrónico ya está registrado.'
             return render(request, 'registrarse.html', {'message': message})
 
+        BaseUsuaruo = Usuario(
+            nombre=nombre, 
+            apellido=apellido,
+            correo=correo,
+            contrasena=make_password(contrasena), 
+            rol=rol
+        )
+        
+        BaseUsuaruo.save()
+        
+        is_superuser = 1 if BaseUsuaruo.rol == 'Arrendador' else 0
+        
         # Crear un nuevo usuario
         usuario = User.objects.create_user(
             username=correo,
             email=correo,
             password=contrasena,
             first_name=nombre,
-            last_name=apellido
+            last_name=apellido, 
+            is_superuser=is_superuser,
         )
         usuario.save()
 
-        BaseUsuaruo = Usuario(
-            nombre=nombre, 
-            apellido=apellido,
-            correo=correo,
-            contrasena=make_password(contrasena), 
-            rol=rol)
-        
-        BaseUsuaruo.save()
         # Autenticar al usuario
         user = authenticate(username=correo, password=contrasena)
-
-        # if user is not None:
-        #     autenticacion(request, user)
-        #     if BaseUsuaruo.rol == 'Arrendador':
-        #         return redirect('/Publicar_alojamientos', usuario_id=BaseUsuaruo.id_usuario)
-        #     else:
-        #         return redirect('/Alojamientos', usuario_id=BaseUsuaruo.id_usuario)
-
-        if BaseUsuaruo.rol == 'Arrendador':
-            if user is not None:
-                autenticacion(request, user)
-                return render(request,'publicar_alojamiento.html', {'usuario': BaseUsuaruo})
-        else:
-            return render(request,'ver_alojamientos.html', {'usuario': BaseUsuaruo})
-
+        autenticacion(request, user)
+        
+        if user is not None:
+            if BaseUsuaruo.rol == 'Arrendador':
+                return redirect('/Alojamientos', usuario)
+            else:
+                return redirect('/Alojamientos')  # Redirigir a la página de publicar arrendatarios 
     return render(request, 'registrarse.html')
+
+
 #-----------------------------------------------------------
 # INICIAR SESIÓN -----------------------------------------------------------------------
 #-----------------------------------------------------------
+
 def login(request):
     if request.method == 'POST':
         correo = request.POST.get('correo')
@@ -80,19 +80,21 @@ def login(request):
             messages.error(request, 'Credenciales inválidas.')
             return render(request, 'iniciarsesion.html')
 
-        if check_password(contrasena, usuario.contrasena):
-            # Iniciar sesión
+        # Autenticar el usuario en Django
+        user = authenticate(request, username=usuario.correo, password=contrasena)
+        if user is not None:
+            autenticacion(request, user)
             request.session['usuario_id'] = usuario.id_usuario
             rolUser= usuario.rol
-
             if rolUser == 'Arrendador':
-                return redirect('/Publicaciones', usuario)  # Redirigir a la página de inicio arrendador
+                return redirect('/Alojamientos', usuario)  # Redirigir a la página de inicio arrendador
             else:
                 return redirect('/Alojamientos')  # Redirigir a la página de publicar arrendatarios 
         else:
             messages.error(request, 'Credenciales inválidas.')
 
     return render(request, 'iniciarsesion.html')
+
 #-----------------------------------------------------------
 #RECUPERAR CONTRASEÑA -----------------------------------------------------------------------
 #-----------------------------------------------------------
@@ -107,12 +109,20 @@ def changepass(request):
             messages.error(request, 'No se encontró un usuario con ese correo electrónico.')
             return render(request, 'recuperar_contrasena.html')
 
+        try:
+            user = User.objects.get(username=usuario.correo)
+            user.set_password(nueva_contrasena)
+            user.save()
+        except User.DoesNotExist:
+            messages.error(request, 'No se encontró un usuario con ese correo electrónico.')
+            return render(request, 'recuperar_contrasena.html')
+
         usuario.contrasena = make_password(nueva_contrasena)
         usuario.save()
         messages.success(request, 'La contraseña se ha cambiado correctamente.')
-        return redirect('/CambiarContraseña')
+        return redirect('/IniciarSesion')
     
-    return render(request, 'iniciarsesion.html')
+    return render(request, 'cambiarcontraseña.html')
 
 def services(request):
     return render(request, 'servicios.html')
@@ -157,13 +167,8 @@ def ver_alojamientos(request):
     contexto = {'propiedades': datos_propiedades}
     return render(request, 'ver_alojamientos.html', contexto)
 
+
 #vista de alojamientos arrendador
-def alojamientos_pub(request):
-    propiedades = Propiedad.objects.all()
-    contexto = {'propiedades': propiedades}
-    return render(request, 'alojamientos_publicados.html',contexto)
-
-
 def descripcion(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -173,6 +178,8 @@ def descripcion(request):
         # Renderizar la plantilla 'descripcion.html' sin datos si la solicitud no es POST
         return render(request, 'descripcion.html')
 
+def publicaciones(request):
+    return render(request,'publicar_alojamiento.html')
 #-----------------------------------------------------------
 # PUBLICAR -----------------------------------------------------------------------
 #-----------------------------------------------------------
@@ -221,7 +228,11 @@ def publicar(request):
             messages.success(request, 'La propiedad se ha publicado correctamente.')
             return redirect('/Alojamientos')
 
-        return render(request, 'alojamientos_publicados.html')
+        return render(request, 'ver_alojamientos.html')
     else:
         messages.error(request, 'Debes iniciar sesión como Arrendador para publicar una propiedad.')
         return redirect('/IniciarSesion')
+    
+def logout_view(request):
+    logout(request)
+    return redirect('/')

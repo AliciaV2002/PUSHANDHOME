@@ -30,46 +30,65 @@
 </head>
 <body>
     <!-- Barra de navegación -->
+    
     <nav class="navbar navbar-expand-lg bg-body-tertiary poppins-bold" style="border-bottom: 1px solid black; font-size: small; background-color: white;">
         <div class="container-fluid">
-          <form class="d-flex navbar-brand" role="search" style="width: 30%;">
-            <input class="form-control me-2 Poppins" type="search" placeholder="Escribe tu punto de busqueda" aria-label="Search" style="font-size: small;">
-            <button class="btn color" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </form>
+            <a class="nav-link active luckiest-guy-regular" style="font-size: x-large; color: #F5A711; margin-left: 55px;" aria-current="page" href="/">PUSH & HOME</a>
+                         
             <div class="justify-content-end">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" id="navbarSupportedContent">
-                <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" id="navbarSupportedContent">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" style="text-decoration: underline; text-decoration-color: orange; color:#F5A711" aria-current="page" href="../Alojamientos">Alojamientos</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                                {% if user.is_superuser %}
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/Registro_publicacion"> Publicar</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/NuestrosServicios"> Conocenos</a>
+                            </li>
+                            <li class="nav-item">
+                                {% if user.is_authenticated %}
+                                    <a class="btn poppins-semibold nav-link" style=" text-decoration: none; border: 1px solid #F5A711; background-color: #F5A711; color: white;" href="#" onclick="logout()" role="button">
+                                        Salir
+                                        <span>
+                                            <i class="fas fa-user" style="padding-left: 2%;"></i>
+                                        </span>
+                                    </a>
+                                {% else %}
+                                    <a class="btn poppins-semibold nav-link" style=" text-decoration: none; border: 1px solid #F5A711; background-color: #F5A711; color: white;" href="/IniciarSesion" role="button">
+                                        Entrar
+                                        <span>
+                                            <i class="fas fa-user" style="padding-left: 2%;"></i>
+                                        </span>
+                                    </a>
+                                {% endif %}
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
                 </div>
-                <div class="offcanvas-body">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" style="text-decoration: underline; text-decoration-color: orange; color:#F5A711" aria-current="page" href="Alojamientos">Alojamientos</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" href="/NuestrosServicios"> Conocenos</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="btn poppins-semibold nav-link" style=" text-decoration: none; border: 1px solid #F5A711; background-color: #F5A711; color: white;" role="button">
-                        Usuario
-                        <span>
-                        <i class="fas fa-user" style="padding-left: 2%;"></i>
-                        </span>
-                    </a>
-                    </li>
-                </ul>
-                </div>
-            </div>
             </div>
         </div>
     </nav>
+    
     <!--Inicio de contenido-->
     <div class="container-xxl" style="padding: 0% 2%;">
         <div class="row">
@@ -242,7 +261,7 @@
     
         // Función para generar las tarjetas de publicación
         function generarTarjeta(propiedad, index) {
-            var imagenUrl = propiedad.imagenes.length > 0 ? propiedad.imagenes[0] : '';
+            var imagenUrl = propiedad.imagenes.length > 0 ? propiedad.imagenes[0] : "{% static 'imagenes/ejemplo.png' %}";
             return `
             <div class="col-4">
                 <div class="card" style="width: 15rem; height: 330px; align-content: center;">
@@ -293,8 +312,45 @@
             return propiedadesFiltradas;
         }
     
-        // Función para mostrar las publicaciones
-        function mostrarPublicaciones() {
+        // Función para filtrar las propiedades
+        function filtrarPropiedades() {
+            var filtros = {
+                tipo_propiedad: [],
+                rango_precios: [],
+                tiene_bano_privado: false,
+                tiene_bano_compartido: false,
+                num_habitaciones: []
+            };
+
+            // Obtener los filtros seleccionados
+            var tiposPropiedadSeleccionados = document.querySelectorAll('#collapseOne .form-check-input:checked');
+            tiposPropiedadSeleccionados.forEach(function(checkbox) {
+                filtros.tipo_propiedad.push(checkbox.nextElementSibling.textContent.trim());
+            });
+
+            var rangosPreciosSeleccionados = document.querySelectorAll('#collapseTwo .form-check-input:checked');
+            rangosPreciosSeleccionados.forEach(function(checkbox) {
+                filtros.rango_precios.push(checkbox.nextElementSibling.textContent.trim());
+            });
+
+            // Filtrar las propiedades según los criterios seleccionados
+            var propiedadesFiltradas = propiedades.filter(function(propiedad) {
+                var cumpleFiltroTipoPropiedad = filtros.tipo_propiedad.length === 0 || filtros.tipo_propiedad.includes(propiedad.tipo_propiedad);
+                var cumpleFiltroRangoPrecios = filtros.rango_precios.length === 0 || filtros.rango_precios.some(function(rango) {
+                    var [min, max] = rango.split(' - ').map(function(valor) {
+                        return parseFloat(valor.replace('$', '').replace('.', ''));
+                    });
+                    return propiedad.precio >= min && propiedad.precio <= max;
+                });
+
+                return cumpleFiltroTipoPropiedad && cumpleFiltroRangoPrecios;
+            });
+
+            return propiedadesFiltradas;
+        }
+    
+        // Función para mostrar las publicaciones filtradas
+        function mostrarPublicacionesFiltradas() {
             var publicacionesContainer = document.getElementById('publicaciones-container');
             publicacionesContainer.innerHTML = '';
             var propiedadesFiltradas = filtrarPropiedades();
@@ -312,6 +368,50 @@
                     enviarDatosYActualizarPagina(propiedad);
                 });
             });
+        }
+    
+        // Función para obtener los valores de un filtro específico
+        function obtenerValoresFiltro(filtroId) {
+            var checkboxes = document.querySelectorAll(`input[type="checkbox"][id^="${filtroId}"]:checked`);
+            var valoresSeleccionados = [];
+            checkboxes.forEach(function(checkbox) {
+                valoresSeleccionados.push(checkbox.value);
+            });
+            return valoresSeleccionados;
+        }
+    
+        // Función para verificar si una propiedad cumple con los filtros seleccionados
+        function cumpleConFiltros(propiedad, tiposPropiedadSeleccionados, rangosPrecioSeleccionados, preferenciasSeleccionadas, numerosHabitacionesSeleccionados) {
+            if (tiposPropiedadSeleccionados.length > 0 && !tiposPropiedadSeleccionados.includes(propiedad.tipo_propiedad)) {
+                return false;
+            }
+    
+            if (rangosPrecioSeleccionados.length > 0) {
+                var precioPropiedad = parseFloat(propiedad.precio.replace(/[$,]/g, ''));
+                var cumpleRangoPrecio = false;
+                for (var i = 0; i < rangosPrecioSeleccionados.length; i++) {
+                    var rango = rangosPrecioSeleccionados[i].split('-');
+                    var min = parseFloat(rango[0].replace(/[$,]/g, ''));
+                    var max = parseFloat(rango[1].replace(/[$,]/g, ''));
+                    if (precioPropiedad >= min && precioPropiedad <= max) {
+                        cumpleRangoPrecio = true;
+                        break;
+                    }
+                }
+                if (!cumpleRangoPrecio) {
+                    return false;
+                }
+            }
+    
+            if (preferenciasSeleccionadas.length > 0 && !preferenciasSeleccionadas.includes(propiedad.tipo_bano)) {
+                return false;
+            }
+    
+            if (numerosHabitacionesSeleccionados.length > 0 && !numerosHabitacionesSeleccionados.includes(propiedad.num_habitaciones.toString())) {
+                return false;
+            }
+    
+            return true;
         }
     
         // Función para enviar los datos al servidor y actualizar la página
@@ -344,9 +444,16 @@
             });
         });
     </script>
+    <script>
+        function logout() {
+            // Realizar aquí las acciones de logout, como redireccionar a la página de logout o enviar una solicitud AJAX al backend para cerrar la sesión
+            // Por ejemplo:
+            window.location.href = '/CerrarSesion/';
+        }
+    </script>
     
+        
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-    
