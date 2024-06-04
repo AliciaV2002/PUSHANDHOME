@@ -82,16 +82,14 @@ MEDIA_URL = '/media/'
 
 DATABASES = {
     'default': {
-        'USER': 'pahdb',
-        'PASSWORD': 'AVNS_-M4KN3WIDOLvsxdyZ72',
-        'HOST': 'db-mysql-nyc3-44441-do-user-16722135-0.c.db.ondigitalocean.com',
-        'PORT ':'25060',
-        'NAME':'pushandhomedb',
-        'sslmode':'REQUIRED', 
-        'ENGINE':'django.db.backends.mysql',
-
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pushandhome',
+        'USER': 'doadmin',
+        'PASSWORD': 'AVNS_j1qov3butkn5jX1DTR4',
+        'HOST': 'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
+        'PORT': 25060,
     }
+}
 
 
 # Password validation
