@@ -82,17 +82,15 @@ MEDIA_URL = '/media/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'push_and_home',
-        'USER': 'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306', 
-        'OPTIONS':{
-            'init_command': "SET sql_mode ='STRICT_TRANS_TABLES'"
+        'username ': 'pahdb',
+        'password ': 'AVNS_-M4KN3WIDOLvsxdyZ72',
+        'HOST': 'db-mysql-nyc3-44441-do-user-16722135-0.c.db.ondigitalocean.com',
+        'PORT ':'25060',
+        'database':'pushandhomedb',
+        'sslmode':'REQUIRED', 
+
         }
     }
-}
 
 
 # Password validation
@@ -130,7 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'	
-
+STATIC_ROOT = Path(BASE_DIR).joinpath('staticfiles')
+STATICFILES_DIRS = (Path(BASE_DIR).joinpath('static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
