@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import boto3
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__name__).resolve().parent
@@ -75,6 +76,30 @@ WSGI_APPLICATION = 'PushandHome.wsgi.application'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# settings
+AWS_S3_ACCESS_KEY_ID = 'DO00FYQPNUUH3X7DFHAD'
+AWS_SECRET_ACCESS_KEY = 'ErNlHkZXtkx8l0JEeXFoSfj8aokc/xRGXzWrjoHSo9Y'
+AWS_STORAGE_BUCKET_NAME = 'pushandhome'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_ENDPOINT_URL = 'https://pushandhome.nyc3.digitaloceanspaces.com'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+# static settings
+AWS_LOCATION = 'media/'
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
+
+
+session = boto3.session.Session()
+client = session.client('s3',
+                        region_name='nyc3',
+                        endpoint_url='https://pushandhome.nyc3.digitaloceanspaces.com',
+                        aws_access_key_id=AWS_S3_ACCESS_KEY_ID,
+                        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
