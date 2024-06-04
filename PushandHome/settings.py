@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__name__).resolve().parent
 
-print(BASE_DIR)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -83,7 +82,7 @@ MEDIA_URL = '/media/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pushandhome',
+        'NAME': 'defaultdb',
         'USER': 'doadmin',
         'PASSWORD':'AVNS_j1qov3butkn5jX1DTR4',
         'HOST':'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
