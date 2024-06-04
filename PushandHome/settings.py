@@ -82,7 +82,7 @@ MEDIA_URL = '/media/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'defaultdb',
+        'NAME': 'pushandhome',
         'USER': 'doadmin',
         'PASSWORD':'AVNS_j1qov3butkn5jX1DTR4',
         'HOST':'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
