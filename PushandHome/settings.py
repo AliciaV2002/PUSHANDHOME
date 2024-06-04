@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-zp7i3h*a_bzeg(6&%0-j16f1@$&188y$k0-ng$pq-21*@r&=$k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,17 +83,13 @@ MEDIA_URL = '/media/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'push_and_home',
-        'USER': 'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306', 
-        'OPTIONS':{
-            'init_command': "SET sql_mode ='STRICT_TRANS_TABLES'"
-        }
+        'NAME': 'defaultdb',
+        'USER': 'doadmin',
+        'PASSWORD':'AVNS_j1qov3butkn5jX1DTR4',
+        'HOST':'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
+        'PORT':'25060', 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
