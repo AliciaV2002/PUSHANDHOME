@@ -88,7 +88,7 @@ DATABASES = {
         'PORT ':'25060',
         'database':'pushandhomedb',
         'sslmode':'REQUIRED',
-        'ENGINE':'mysql',
+        'ENGINE':'django.db.backends.mysql',
 
         }
     }
