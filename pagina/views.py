@@ -165,6 +165,7 @@ def ver_alojamientos(request):
         }
         datos_propiedades.append(datos_propiedad)
     contexto = {'propiedades': datos_propiedades}
+    print("hola", context)
     return render(request, 'ver_alojamientos.html', contexto)
 
 
