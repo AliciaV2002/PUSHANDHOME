@@ -143,7 +143,8 @@ def ver_alojamientos(request):
             try:
                 if imagen.imagen:  # Verificar si hay un archivo asociado
                     imagen_url = imagen.imagen.url
-                    imagenes.append(imagen_url)
+                    direccion = imagen.imagen.url.split('?')
+                    imagenes.append(direccion[0])
             except ValueError:
                 # Manejar el caso en el que la imagen no tiene un archivo asociado
                 pass
