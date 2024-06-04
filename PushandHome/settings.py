@@ -83,14 +83,13 @@ MEDIA_URL = '/media/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pushandhome',
+        'NAME': 'defaultdb',
         'USER': 'doadmin',
-        'PASSWORD': 'AVNS_j1qov3butkn5jX1DTR4',
-        'HOST': 'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
-        'PORT': 25060,
+        'PASSWORD':'AVNS_j1qov3butkn5jX1DTR4',
+        'HOST':'pushandhome-do-user-16836542-0.c.db.ondigitalocean.com',
+        'PORT':'25060', 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
