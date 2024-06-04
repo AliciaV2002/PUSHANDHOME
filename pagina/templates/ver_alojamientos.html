@@ -230,11 +230,10 @@
     </footer>
 
 
-    <!-- Script para generar las publicaciones -->
-    <script>
-        // Datos de las propiedades
-        document.addEventListener('DOMContentLoaded', function() {
-        // Datos de las propiedades
+  <!-- Script para generar las publicaciones -->
+<script>
+    // Datos de las propiedades
+    document.addEventListener('DOMContentLoaded', function() {
         var propiedades = [
             {% for propiedad in propiedades reversed %}
             {
@@ -274,7 +273,7 @@
                 </div>
             </div>`;
         }
-    
+
         // Función para filtrar las propiedades
         function filtrarPropiedades() {
             var filtros = {
@@ -311,28 +310,32 @@
 
             return propiedadesFiltradas;
         }
-    
+
         // Función para mostrar las publicaciones
         function mostrarPublicaciones() {
             var publicacionesContainer = document.getElementById('publicaciones-container');
-            publicacionesContainer.innerHTML = '';
-            var propiedadesFiltradas = filtrarPropiedades();
-            propiedadesFiltradas.forEach(function(propiedad, index) {
-                publicacionesContainer.innerHTML += generarTarjeta(propiedad, index);
-            });
-    
-            // Agregar evento de clic a los enlaces "Ver más"
-            var verMasLinks = document.querySelectorAll('.ver-mas');
-            verMasLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    var index = this.dataset.index;
-                    var propiedad = propiedadesFiltradas[index];
-                    enviarDatosYActualizarPagina(propiedad);
+            if (publicacionesContainer) {
+                publicacionesContainer.innerHTML = '';
+                var propiedadesFiltradas = filtrarPropiedades();
+                propiedadesFiltradas.forEach(function(propiedad, index) {
+                    publicacionesContainer.innerHTML += generarTarjeta(propiedad, index);
                 });
-            });
+
+                // Agregar evento de clic a los enlaces "Ver más"
+                var verMasLinks = document.querySelectorAll('.ver-mas');
+                verMasLinks.forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        var index = this.dataset.index;
+                        var propiedad = propiedadesFiltradas[index];
+                        enviarDatosYActualizarPagina(propiedad);
+                    });
+                });
+            } else {
+                console.error('El elemento #publicaciones-container no se encontró en el DOM');
+            }
         }
-    
+
         // Función para enviar los datos al servidor y actualizar la página
         function enviarDatosYActualizarPagina(propiedad) {
             var url = '/Descripcion_de_alojamientos/';
@@ -351,29 +354,30 @@
             var data = JSON.stringify(propiedad);
             xhr.send(data);
         }
-    
-        // Llamar a la función para mostrar las publicaciones
-        mostrarPublicaciones();
-    
-        /// Agregar evento de cambio a los filtros
+
+        // Agregar evento de cambio a los filtros
         var filtrosCheckboxes = document.querySelectorAll('#multiAccordion .form-check-input');
         filtrosCheckboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
                 mostrarPublicaciones();
             });
         });
-    </script>
+    });
 
-    <script>
-        function logout() {
-            // Realizar aquí las acciones de logout, como redireccionar a la página de logout o enviar una solicitud AJAX al backend para cerrar la sesión
-            // Por ejemplo:
-            window.location.href = '/CerrarSesion/';
-        }
-    </script>
-    
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    // Llamar a la función para mostrar las publicaciones
+    mostrarPublicaciones();
+</script>
+
+<script>
+    function logout() {
+        // Realizar aquí las acciones de logout, como redireccionar a la página de logout o enviar una solicitud AJAX al backend para cerrar la sesión
+        // Por ejemplo:
+        window.location.href = '/CerrarSesion/';
+    }
+</script>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
     
