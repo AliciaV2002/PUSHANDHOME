@@ -45,12 +45,12 @@
                                 <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" style="text-decoration: underline; text-decoration-color: orange; color:#F5A711" aria-current="page" href="../Alojamientos">Alojamientos</a>
+                                <a class="nav-link active" aria-current="page" href="../Alojamientos">Alojamientos</a>
                             </li>
                             {% if user.is_authenticated %}
                                 {% if user.is_superuser %}
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="/Registro_publicacion"> Publicar</a>
+                                        <a class="nav-link active" style="text-decoration: underline; text-decoration-color: orange; color:#F5A711" href="/Registro_publicacion"> Publicar</a>
                                     </li>
                                 {% endif %}
                             {% endif %}
@@ -91,8 +91,8 @@
                 <div class="col-3">
                     <div class="card text-center">
                         <div class="body" style="padding: 2% 0%;">
-                            <label for="requisitos">Requisitos:</label><br>
-                            <textarea style="border-radius: 20px; padding: 1% 2%; margin-bottom: 5%;" id="requisitos" name="requisitos"></textarea><br>
+                            <label for="requisitos" style="margin-bottom: 5%;">Requisitos:</label><br>
+                            <textarea style="border-radius: 10px; margin-bottom: 5%; border: 1px solid rgba(0, 0, 1, 0.2);" id="requisitos" name="requisitos" rows="4" cols="29"></textarea><br>
 
                             <h6 style="padding-top: 10%; text-transform: uppercase; font-weight: bold; color: #F5A711;">Detalles del alojamiento</h6>
                             
@@ -176,15 +176,14 @@
                                             <input class="form-control" style="font-size: small;" type="number" id="precio" name="precio" step="1000"  min="0" max="2000000" required><br>
                                         </div>
                                         <div class="col-6">                                         
-                                            <h6 class="card-title">Incluye: </h6><br>
-                                            <div class="form-check form-check-inline">
-                                                <div>
-                                                    <input type="checkbox" id="internet" name="servicios" value="Internet">
-                                                    <label for="internet" style="margin-left: -15%;" class="form-check label">Internet</label>
+                                            <h6 class="card-title">Incluye: </h6>
+                                            <div class="form-check form-check-inline" style="display: flex;">
+                                                <div style="display: flex;">
+                                                    <input type="checkbox" id="internet" name="servicios" value="Internet"><label for="internet" class="form-check label" style="margin-left: -15%;" >Internet</label>
                                                 </div>
-                                                <div>
+                                                <div style="display: flex">
                                                     <input type="checkbox" id="servicios_publicos" name="servicios" value="Servicios públicos">
-                                                    <label for="servicios_publicos" style="margin-left: -30%;" class="form-check label">Servicios públicos</label>
+                                                    <label for="servicios_publicos"  class="form-check label" style="margin-left: -10%;">Servicios públicos</label>
                                                 </div> 
                                             </div><br>
                                         </div>
@@ -203,7 +202,7 @@
                         </div>
                     </div>
                     <div class="text-end" style="margin-top: calc(200%)">
-                        <input type="submit" class="btn-warning" value="Publicar">
+                        <input type="submit" class="btn-warning" value="Publicar" style="border-radius: 10px; border: 2px solid #F5A711; font-size: small; padding: 2% 5%;">
                     </div>
                 </div>
             </div>
