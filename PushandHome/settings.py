@@ -87,7 +87,7 @@ DATABASES = {
         'HOST': 'db-mysql-nyc3-44441-do-user-16722135-0.c.db.ondigitalocean.com',
         'PORT ':'25060',
         'NAME':'pushandhomedb',
-        'OPTIONS': {'sslmode': 'require'},
+        'sslmode':'REQUIRED', 
         'ENGINE':'django.db.backends.mysql',
 
         }
