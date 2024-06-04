@@ -18,4 +18,4 @@ urlpatterns = [
     #nueva -> modificaron html alojamientos, funcion de alojamientos_pub, modificacion en register y login.
     path('Registro_publicacion/', views.publicaciones),
     path('Publicar_alojamientos/', views.publicar),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL)
