@@ -87,7 +87,8 @@ DATABASES = {
         'HOST': 'db-mysql-nyc3-44441-do-user-16722135-0.c.db.ondigitalocean.com',
         'PORT ':'25060',
         'database':'pushandhomedb',
-        'sslmode':'REQUIRED', 
+        'sslmode':'REQUIRED',
+        'ENGINE':'mysql',
 
         }
     }
