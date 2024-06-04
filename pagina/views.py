@@ -223,7 +223,6 @@ def publicar(request):
             imagenes = request.FILES.getlist('imagenes')
             for imagen in imagenes:
                 img = Imagen(imagen=imagen, id_propiedad=propiedad)
-                img = Imagen(imagen = imagen,id_propiedad = propiedad )
                 img.save()
 
             messages.success(request, 'La propiedad se ha publicado correctamente.')
